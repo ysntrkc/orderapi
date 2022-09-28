@@ -9,7 +9,7 @@ class AuthService {
             const user = await db.Users.findOne({ where: { email: email, password: md5(password) }, attributes: { exclude: ['password'] } });
 
             if (user) {
-                const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: "1h" });
+                const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: "24h" });
                 return { user: user, type: "true", message: "Login successful", token };
             } else {
                 return { type: "false", message: "Invalid credentials" };
