@@ -12,16 +12,27 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-    await queryInterface.bulkInsert('Permissions', [{
-      description: 'create_product',
-      createdAt: new Date(),
-      updatedAt: new Date()
-    },
-    {
-      description: 'update_product',
-      createdAt: new Date(),
-      updatedAt: new Date()
-    }], {});
+    await queryInterface.bulkInsert('Permissions', [
+      {
+        description: 'create_product',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        description: 'update_product',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        description: 'show_orders',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        description: 'update_order_status',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }], {});
   },
 
   async down(queryInterface, Sequelize) {
