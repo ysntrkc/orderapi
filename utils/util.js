@@ -35,7 +35,6 @@ class Utils {
                     }
                 });
 
-
                 const userInfo = JSON.parse(JSON.stringify(user));
 
                 if (userInfo.Roles.length > 0 && userInfo.Roles[0].Permissions[0].id === permId) {
