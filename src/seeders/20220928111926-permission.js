@@ -16,6 +16,11 @@ module.exports = {
       description: 'create_product',
       createdAt: new Date(),
       updatedAt: new Date()
+    },
+    {
+      description: 'update_product',
+      createdAt: new Date(),
+      updatedAt: new Date()
     }], {});
   },
 

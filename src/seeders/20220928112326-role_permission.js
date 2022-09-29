@@ -17,6 +17,12 @@ module.exports = {
       permissionId: 1,
       createdAt: new Date(),
       updatedAt: new Date()
+    },
+    {
+      roleId: 1,
+      permissionId: 2,
+      createdAt: new Date(),
+      updatedAt: new Date()
     }], {});
   },
 
