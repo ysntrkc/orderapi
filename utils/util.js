@@ -7,12 +7,12 @@ class Utils {
 
         if (!token) {
             console.log("No token provided");
-            return res.status(401).json({ type: "false", message: "Unauthorized" });
+            return res.status(401).json({ type: false, message: "Unauthorized" });
         }
 
         jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
             if (err) {
-                return res.status(401).json({ type: "false", message: "Unauthorized" });
+                return res.status(401).json({ type: false, message: "Unauthorized" });
             }
             req.userId = decoded.id;
             next();
@@ -40,10 +40,10 @@ class Utils {
                 if (userInfo.Roles.length > 0 && userInfo.Roles[0].Permissions[0].id === permId) {
                     next();
                 } else {
-                    return res.status(401).json({ type: "false", message: "Unauthorized" });
+                    return res.status(401).json({ type: false, message: "Unauthorized" });
                 }
             } catch (error) {
-                return res.status(500).json({ type: "false", message: error.message });
+                return res.status(500).json({ type: false, message: error.message });
             }
         }
     }

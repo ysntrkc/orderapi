@@ -1,7 +1,7 @@
 import db from "../../src/models";
 
 class OrderService {
-    static async createOrder(req, res) {
+    static async createOrder(req) {
         try {
             const cart = await db.Carts.findOne({
                 where: { userId: req.userId },
@@ -22,7 +22,7 @@ class OrderService {
             const newOrder = await db.Orders.create(order).then(order => {
                 return order;
             }).catch(err => {
-                return { type: "false", message: err.message };
+                return { type: false, message: err.message };
             });
 
             cart.CartItems.forEach(async item => {
@@ -35,40 +35,37 @@ class OrderService {
                 await db.OrderItems.create(orderItem).then(orderItem => {
                     return orderItem;
                 }).catch(err => {
-                    return { type: "false", message: err.message };
+                    return { type: false, message: err.message };
                 });
             })
 
             await db.CartItems.destroy({ where: { cartId: cart.id } });
             await db.Carts.destroy({ where: { userId: req.userId } });
 
-            return { type: "true", message: "Order created successfully" };
+            return { type: true, message: "Order created successfully" };
 
         } catch (error) {
-            return { type: "false", message: error.message };
+            return { type: false, message: error.message };
         }
     }
 
-    static async getOrders(req, res) {
+    static async getOrders(req) {
         try {
             const orders = await db.Orders.findAll({
                 where: { userId: req.userId },
                 include: {
                     model: db.OrderItems,
-                    include: {
-                        model: db.Products
-                    }
                 }
             });
 
-            return { type: "true", data: orders, message: "Orders fetched successfully" };
+            return { type: true, data: orders, message: "Orders fetched successfully" };
 
         } catch (error) {
-            return { type: "false", message: error.message };
+            return { type: false, message: error.message };
         }
     }
 
-    static async getOrdersByAdmin(req, res) {
+    static async getOrdersByAdmin() {
         try {
             const orders = await db.Orders.findAll({
                 include: {
@@ -79,10 +76,10 @@ class OrderService {
                 }
             });
 
-            return { type: "true", data: orders, message: "Orders fetched successfully" };
+            return { type: true, data: orders, message: "Orders fetched successfully" };
 
         } catch (error) {
-            return { type: "false", message: error.message };
+            return { type: false, message: error.message };
         }
     }
 
@@ -93,15 +90,15 @@ class OrderService {
             });
 
             if (!order) {
-                return { type: "false", message: "Order not found" };
+                return { type: false, message: "Order not found" };
             }
 
             await db.Orders.update({ status: req.body.status }, { where: { id: req.params.id } });
 
-            return { type: "true", message: "Order status updated successfully" };
+            return { type: true, message: "Order status updated successfully" };
 
         } catch (error) {
-            return { type: "false", message: error.message };
+            return { type: false, message: error.message };
         }
     }
 }

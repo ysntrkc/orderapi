@@ -10,16 +10,7 @@ class ProdService {
         }
     }
 
-    static async getProductById(id) {
-        try {
-            const product = await db.Products.findOne({ where: { id: id } });
-            return product;
-        } catch (error) {
-            throw error;
-        }
-    }
-
-    static async addProduct(req, res) {
+    static async addProduct(req) {
         try {
             const { name, price, stock_quantity } = req.body;
             const data = {
@@ -31,25 +22,25 @@ class ProdService {
             }
 
             if (await db.Products.findOne({ where: { name: name } })) {
-                return { type: "false", message: "Product already exists" };
+                return { type: false, message: "Product already exists" };
             }
 
             const product = await db.Products.create(data);
-            return { data: product, type: "true", message: "Product added successfully" };
+            return { data: product, type: true, message: "Product added successfully" };
         } catch (error) {
             throw error;
         }
     }
 
-    static async updateStockQuantity(req, res) {
+    static async updateStockQuantity(req) {
         try {
             const { id, stock_quantity } = req.body;
             const product = await db.Products.findOne({ where: { id: id } });
             if (product) {
                 await db.Products.update({ stockQuantity: stock_quantity, updatedAt: new Date() }, { where: { id: id } });
-                return { type: "true", message: "Product updated successfully" };
+                return { type: true, message: "Product updated successfully" };
             } else {
-                return { type: "false", message: "Product not found" };
+                return { type: false, message: "Product not found" };
             }
         } catch (error) {
             throw error;

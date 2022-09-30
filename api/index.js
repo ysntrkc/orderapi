@@ -18,7 +18,7 @@ app.use("/routes/cart", Utils.authorizeToken, cartRoutes);
 app.use("/routes/order", Utils.authorizeToken, orderRoutes);
 
 app.get('/health', (req, res) => {
-    return res.json({ type: "true", message: "Server is up and running" });
+    return res.json({ type: true, message: "Server is up and running" });
 });
 
 app.listen(PORT, () => {

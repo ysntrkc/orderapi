@@ -1,7 +1,7 @@
 import db from "../../src/models";
 
 class CartService {
-    static async addToCart(req, res) {
+    static async addToCart(req) {
         try {
             const item = {
                 productId: req.body.productId,
@@ -12,7 +12,7 @@ class CartService {
             const product = await db.Products.findOne({ where: { id: item.productId } });
 
             if (!product || product.stockQuantity < item.quantity) {
-                return { type: "false", message: "Product not found or not enough stock" };
+                return { type: false, message: "Product not found or not enough stock" };
             }
 
             let cart = await db.Carts.findOne({
@@ -26,7 +26,7 @@ class CartService {
                 cart = await db.Carts.create({ userId: item.userId }).then(cart => {
                     return cart;
                 }).catch(error => {
-                    return { type: "false", message: error.message };
+                    return { type: false, message: error.message };
                 });
             }
 
@@ -44,7 +44,7 @@ class CartService {
                 }).then(cartItem => {
                     return cartItem;
                 }).catch(err => {
-                    return { type: "false", message: err.message };
+                    return { type: false, message: err.message };
                 });
             } else {
                 await db.CartItems.update({
@@ -59,13 +59,13 @@ class CartService {
                 await db.Carts.update({ total: cart.total + (product.price * item.quantity), updatedAt: new Date() }, { where: { id: cart.id } });
             }
 
-            return { data: cartItem, type: "true", message: "Product added to cart successfully" };
+            return { data: cartItem, type: true, message: "Product added to cart successfully" };
         } catch (error) {
             throw error;
         }
     }
 
-    static async getCart(req, res) {
+    static async getCart(req) {
         try {
             const user = await db.Users.findOne({
                 where: { id: req.userId },
@@ -87,9 +87,9 @@ class CartService {
                     }
                 });
 
-                return { data: cart, type: "true", message: "Cart fetched successfully" };
+                return { data: cart, type: true, message: "Cart fetched successfully" };
             } else {
-                return { type: "false", message: "User not found" };
+                return { type: false, message: "User not found" };
             }
         }
         catch (error) {
