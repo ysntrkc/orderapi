@@ -1,5 +1,4 @@
 import md5 from 'md5';
-import jwt from 'jsonwebtoken';
 import db from '../../src/models';
 import AuthValidation from '../validations/auth';
 
@@ -16,8 +15,12 @@ class AuthService {
             const user = await db.Users.findOne({ where: { email: email, password: md5(password) }, attributes: { exclude: ['password'] } });
 
             if (user) {
-                const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: "24h" });
-                return { user: user, type: true, message: "Login successful", token };
+                req.session.user = {
+                    id: user.id,
+                    username: user.username,
+                    email: user.email
+                };
+                return { user: user, type: true, message: "Login successful", session: req.session };
             } else {
                 return { type: false, message: "Invalid credentials" };
             }
@@ -53,6 +56,15 @@ class AuthService {
             } else {
                 return { type: false, message: "Registration failed" };
             }
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    static async logout(req) {
+        try {
+            req.session.destroy();
+            return { type: true, message: "Logout successful" };
         } catch (error) {
             throw error;
         }

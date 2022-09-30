@@ -6,7 +6,7 @@ class CartService {
             const item = {
                 productId: req.body.productId,
                 quantity: req.body.quantity,
-                userId: req.userId
+                userId: req.session.user.id
             }
 
             const product = await db.Products.findOne({ where: { id: item.productId } });
@@ -68,7 +68,7 @@ class CartService {
     static async getCart(req) {
         try {
             const user = await db.Users.findOne({
-                where: { id: req.userId },
+                where: { id: req.session.user.id },
                 include: {
                     model: db.Roles,
                     include: {
@@ -81,7 +81,7 @@ class CartService {
 
             if (user) {
                 const cart = await db.Carts.findOne({
-                    where: { userId: req.userId },
+                    where: { userId: req.session.user.id },
                     include: {
                         model: db.CartItems
                     }

@@ -4,7 +4,7 @@ class OrderService {
     static async createOrder(req) {
         try {
             const cart = await db.Carts.findOne({
-                where: { userId: req.userId },
+                where: { userId: req.session.user.id },
                 include: {
                     model: db.CartItems,
                     include: {
@@ -14,7 +14,7 @@ class OrderService {
             });
 
             const order = {
-                userId: req.userId,
+                userId: req.session.user.id,
                 total: cart.total,
                 status: "pending"
             }
@@ -40,7 +40,7 @@ class OrderService {
             })
 
             await db.CartItems.destroy({ where: { cartId: cart.id } });
-            await db.Carts.destroy({ where: { userId: req.userId } });
+            await db.Carts.destroy({ where: { userId: req.session.user.id } });
 
             return { type: true, message: "Order created successfully" };
 
@@ -52,14 +52,16 @@ class OrderService {
     static async getOrders(req) {
         try {
             const orders = await db.Orders.findAll({
-                where: { userId: req.userId },
+                where: { userId: req.session.user.id },
                 include: {
                     model: db.OrderItems,
                 }
             });
-
-            return { type: true, data: orders, message: "Orders fetched successfully" };
-
+            if (orders) {
+                return { type: true, data: orders, message: "Orders fetched successfully" };
+            } else {
+                return { type: false, message: "Orders not found" };
+            }
         } catch (error) {
             return { type: false, message: error.message };
         }
@@ -75,15 +77,13 @@ class OrderService {
                     }
                 }
             });
-
             return { type: true, data: orders, message: "Orders fetched successfully" };
-
         } catch (error) {
             return { type: false, message: error.message };
         }
     }
 
-    static async updateOrderStatus(req, res) {
+    static async updateOrderStatus(req) {
         try {
             const order = await db.Orders.findOne({
                 where: { id: req.params.id }
@@ -96,7 +96,6 @@ class OrderService {
             await db.Orders.update({ status: req.body.status }, { where: { id: req.params.id } });
 
             return { type: true, message: "Order status updated successfully" };
-
         } catch (error) {
             return { type: false, message: error.message };
         }

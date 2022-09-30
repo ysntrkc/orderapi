@@ -23,7 +23,7 @@ class Utils {
         return async (req, res, next) => {
             try {
                 const user = await db.Users.findOne({
-                    where: { id: req.userId },
+                    where: { id: req.session.user.id },
                     include: {
                         model: db.Roles,
                         include: {
@@ -45,6 +45,14 @@ class Utils {
             } catch (error) {
                 return res.status(500).json({ type: false, message: error.message });
             }
+        }
+    }
+
+    static async authorizeBySession(req, res, next) {
+        if (req.session.user && req.cookies["connect.sid"]) {
+            next();
+        } else {
+            return res.status(401).json({ type: false, message: "Unauthorized" });
         }
     }
 }

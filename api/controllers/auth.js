@@ -18,6 +18,15 @@ class AuthController {
             return res.status(500).json({ type: false, message: result.message });
         }
     }
+
+    static async logout(req, res) {
+        const result = await AuthService.logout(req, res);
+        if (result.type) {
+            return res.status(200).json({ type: true, message: result.message });
+        } else {
+            return res.status(500).json({ type: false, message: result.message });
+        }
+    }
 }
 
 export default AuthController;
