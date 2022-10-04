@@ -52,6 +52,7 @@ class AuthService {
             const user = await db.Users.create(data);
 
             if (user) {
+                await db.User_Roles.create({ userId: user.id, roleId: 3, createdAt: new Date(), updatedAt: new Date() });
                 return { type: true, message: "Registration successful" };
             } else {
                 return { type: false, message: "Registration failed" };
