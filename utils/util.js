@@ -55,6 +55,36 @@ class Utils {
             return res.status(401).json({ type: false, message: "Unauthorized" });
         }
     }
+
+    static async authorizeSysAdmin(req, res, next) {
+        try {
+            const user = await db.Users.findOne({
+                where: { id: req.session.user.id },
+                include: {
+                    model: db.Roles,
+                    where: { id: 1 },
+                    through: []
+                }
+            });
+
+
+
+            const userInfo = JSON.parse(JSON.stringify(user));
+
+            if (user && userInfo.Roles.length > 0 && userInfo.Roles[0].id === 1) {
+                next();
+            } else {
+                return res.status(401).json({ type: false, message: "Unauthorized" });
+            }
+        } catch (error) {
+            return res.status(500).json({ type: false, message: error.message });
+        }
+    }
+
+    static async getRoute(file) {
+        const route = file.split("\\");
+        return route[route.length - 1].split(".")[0];
+    }
 }
 
 export default Utils;
