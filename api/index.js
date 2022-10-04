@@ -1,8 +1,10 @@
 import express from "express";
 import parser from "body-parser";
-import routes from "./routes";
 import cookieParser from "cookie-parser";
 import session from "express-session";
+import pub from "./public";
+import priv from "./private";
+import admin from "./admin";
 
 const PORT = process.env.PORT || 3000;
 const oneDay = 1000 * 60 * 60 * 24;
@@ -19,7 +21,9 @@ app.use(session({
 }));
 app.use(cookieParser());
 
-app.use("/routes", routes);
+app.use("/public", pub);
+app.use("/private", priv);
+app.use("/", admin);
 
 app.get('/health', (req, res) => {
     return res.json({ type: true, message: "Server is up and running" });

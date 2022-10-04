@@ -11,6 +11,7 @@ class AuthController {
     }
 
     static async register(req, res) {
+
         const result = await AuthService.register(req, res);
         if (result.type) {
             return res.status(200).json({ type: true, message: result.message });

@@ -67,8 +67,6 @@ class Utils {
                 }
             });
 
-
-
             const userInfo = JSON.parse(JSON.stringify(user));
 
             if (user && userInfo.Roles.length > 0 && userInfo.Roles[0].id === 1) {
@@ -79,11 +77,6 @@ class Utils {
         } catch (error) {
             return res.status(500).json({ type: false, message: error.message });
         }
-    }
-
-    static async getRoute(file) {
-        const route = file.split("\\");
-        return route[route.length - 1].split(".")[0];
     }
 }
 
