@@ -1,10 +1,6 @@
 import express from "express";
 import parser from "body-parser";
-import authRoutes from "./routes/auth.js";
-import productRoutes from "./routes/product.js";
-import cartRoutes from "./routes/cart.js";
-import orderRoutes from "./routes/order.js";
-import Utils from "../utils/util.js";
+import routes from "./routes";
 import cookieParser from "cookie-parser";
 import session from "express-session";
 
@@ -23,10 +19,7 @@ app.use(session({
 }));
 app.use(cookieParser());
 
-app.use("/routes/auth", authRoutes);
-app.use("/routes/product", Utils.authorizeBySession, productRoutes);
-app.use("/routes/cart", Utils.authorizeBySession, cartRoutes);
-app.use("/routes/order", Utils.authorizeBySession, orderRoutes);
+app.use("/routes", routes);
 
 app.get('/health', (req, res) => {
     return res.json({ type: true, message: "Server is up and running" });
