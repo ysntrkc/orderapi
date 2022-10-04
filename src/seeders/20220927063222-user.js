@@ -1,5 +1,5 @@
 'use strict';
-
+const md5 = require('md5');
 module.exports = {
   async up(queryInterface, Sequelize) {
     /**
@@ -12,21 +12,27 @@ module.exports = {
      * }], {});
     */
     await queryInterface.bulkInsert('Users', [{
-      username: 'janedoe',
-      email: 'jane@doe.com',
-      password: '123456',
-      createdAt: new Date(),
-      updatedAt: new Date()
-    }, {
-      username: 'johndoe',
-      email: 'john@doe.com',
-      password: '123123',
+      username: 'admin',
+      email: 'admin@admin.com',
+      password: md5('Pass123.'),
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
       username: 'yasin',
       email: 'yasin@gmail.com',
-      password: 'qwe123',
+      password: md5('Pass123.'),
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }, {
+      username: 'johndoe',
+      email: 'john@doe.com',
+      password: md5('Pass123.'),
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }, {
+      username: 'janedoe',
+      email: 'jane@doe.com',
+      password: md5('Pass123.'),
       createdAt: new Date(),
       updatedAt: new Date()
     }], {});

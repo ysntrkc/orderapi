@@ -14,6 +14,16 @@ module.exports = {
     */
     await queryInterface.bulkInsert('Permissions', [
       {
+        description: 'create_role_and_permission',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        description: 'add_role_and_permission',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
         description: 'create_product',
         createdAt: new Date(),
         updatedAt: new Date()
