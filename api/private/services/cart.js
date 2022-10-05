@@ -1,101 +1,114 @@
-import db from "../../src/models";
+import db from '../../src/models';
 
 class CartService {
-    static async addToCart(req) {
-        try {
-            const item = {
-                productId: req.body.productId,
-                quantity: req.body.quantity,
-                userId: req.session.user.id
-            }
 
-            const product = await db.Products.findOne({ where: { id: item.productId } });
+	static async addToCart(req) {
+		try {
+			const item = {
+				productId: req.body.productId,
+				quantity: req.body.quantity,
+				userId: req.session.user.id
+			};
 
-            if (!product || product.stockQuantity < item.quantity) {
-                return { type: false, message: "Product not found or not enough stock" };
-            }
+			const product = await db.Products.findOne({ where: { id: item.productId } });
 
-            let cart = await db.Carts.findOne({
-                where: { userId: item.userId },
-                include: {
-                    model: db.CartItems
-                }
-            });
+			if (!product || product.stockQuantity < item.quantity) {
+				return { type: false, message: 'Product not found or not enough stock' };
+			}
 
-            if (!cart) {
-                cart = await db.Carts.create({ userId: item.userId }).then(cart => {
-                    return cart;
-                }).catch(error => {
-                    return { type: false, message: error.message };
-                });
-            }
+			let cart = await db.Carts.findOne({
+				where: { userId: item.userId },
+				include: {
+					model: db.CartItems
+				}
+			});
 
-            item["cartId"] = cart.id;
+			if (!cart) {
+				cart = await db.Carts.create({ userId: item.userId }).then(cr => {
+					return cr;
+				}).catch(error => {
+					return { type: false, message: error.message };
+				});
+			}
 
-            let cartItem = await db.CartItems.findOne({
-                where: { productId: item.productId, cartId: item.cartId }
-            });
+			item['cartId'] = cart.id;
 
-            if (!cartItem) {
-                cartItem = await db.CartItems.create({
-                    productId: item.productId,
-                    quantity: item.quantity,
-                    cartId: item.cartId
-                }).then(cartItem => {
-                    return cartItem;
-                }).catch(err => {
-                    return { type: false, message: err.message };
-                });
-            } else {
-                await db.CartItems.update({
-                    quantity: cartItem.quantity + item.quantity
-                }, {
-                    where: { productId: item.productId, cartId: item.cartId }
-                });
-            }
+			let cartItem = await db.CartItems.findOne({
+				where: { productId: item.productId, cartId: item.cartId }
+			});
 
-            if (product) {
-                await db.Products.update({ stockQuantity: product.stockQuantity - item.quantity }, { where: { id: item.productId } });
-                await db.Carts.update({ total: cart.total + (product.price * item.quantity), updatedAt: new Date() }, { where: { id: cart.id } });
-            }
+			if (!cartItem) {
+				cartItem = await db.CartItems.create({
+					productId: item.productId,
+					quantity: item.quantity,
+					cartId: item.cartId
+				}).then(cItem => {
+					return cItem;
+				}).catch(err => {
+					return { type: false, message: err.message };
+				});
+			}
+			else {
+				await db.CartItems.update({
+					quantity: cartItem.quantity + item.quantity
+				}, {
+					where: { productId: item.productId, cartId: item.cartId }
+				});
+			}
 
-            return { data: cartItem, type: true, message: "Product added to cart successfully" };
-        } catch (error) {
-            throw error;
-        }
-    }
+			if (product) {
+				await db.Products.update({
+					stockQuantity: product.stockQuantity - item.quantity
+				}, {
+					where: { id: item.productId } }
+				);
+				await db.Carts.update({
+					total: cart.total + (product.price * item.quantity), updatedAt: new Date()
+				}, { where: {
+					id: cart.id }
+				});
+			}
 
-    static async getCart(req) {
-        try {
-            const user = await db.Users.findOne({
-                where: { id: req.session.user.id },
-                include: {
-                    model: db.Roles,
-                    include: {
-                        model: db.Permissions,
-                        through: []
-                    },
-                    through: []
-                }
-            });
+			return { data: cartItem, type: true, message: 'Product added to cart successfully' };
+		}
+		catch (error) {
+			throw error;
+		}
+	}
 
-            if (user) {
-                const cart = await db.Carts.findOne({
-                    where: { userId: req.session.user.id },
-                    include: {
-                        model: db.CartItems
-                    }
-                });
+	static async getCart(req) {
+		try {
+			const user = await db.Users.findOne({
+				where: { id: req.session.user.id },
+				include: {
+					model: db.Roles,
+					include: {
+						model: db.Permissions,
+						through: []
+					},
+					through: []
+				}
+			});
 
-                return { data: cart, type: true, message: "Cart fetched successfully" };
-            } else {
-                return { type: false, message: "User not found" };
-            }
-        }
-        catch (error) {
-            throw error;
-        }
-    }
+			if (user) {
+				const cart = await db.Carts.findOne({
+					where: { userId: req.session.user.id },
+					include: {
+						model: db.CartItems
+					}
+				});
+
+				return { data: cart, type: true, message: 'Cart fetched successfully' };
+			}
+			else {
+				return { type: false, message: 'User not found' };
+			}
+		}
+		catch (error) {
+			throw error;
+		}
+	}
+
 }
 
 export default CartService;
