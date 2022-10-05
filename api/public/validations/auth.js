@@ -32,9 +32,6 @@ class AuthValidation {
 				new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&._])[A-Za-z\\d@$!%*?&._]{8,}$')
 			).messages({
 				'string.min': 'Password must be at least 8 characters long',
-				'string.pattern': `Password must contain at least one uppercase letter,
-                                                                one lowercase letter,
-                                                                one number and one special character`,
 				'string.empty': 'Password cannot be empty',
 				'string.required': 'Password is required',
 				'any.required': 'Password is required'
