@@ -1,19 +1,52 @@
+import session from 'express-session';
 import jwt from 'jsonwebtoken';
 import db from '../src/models';
+import express from 'express';
+
+const app = express();
 
 class Utils {
+
+	static async createToken(user) {
+		const token = jwt.sign({ id: user.id, email: user.email, username: user.username }, process.env.JWT_SECRET, {
+			expiresIn: '180d'
+		});
+
+		return token;
+	}
+
+	static async resolveToken(token) {
+		try {
+			const decoded = jwt.verify(token, process.env.JWT_SECRET);
+			const user = await db.Users.findOne({
+				where: { id: decoded.id },
+				attributes: { exclude: [ 'password' ] }
+			});
+
+			if (user) {
+				return user;
+			}
+			else {
+				return null;
+			}
+		}
+		catch (error) {
+			return null;
+		}
+	}
 
 	static async authorizeToken(req, res, next) {
 		const token = req.headers.auth;
 
 		if (!token) {
-			console.log('No token provided');
-			return res.status(401).json({ type: false, message: 'Unauthorized' });
+			res.status(401);
+			return { type: false, message: 'Unauthorized' };
 		}
 
 		jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
 			if (err) {
-				return res.status(401).json({ type: false, message: 'Unauthorized' });
+				res.status(401);
+				return { type: false, message: 'Unauthorized' };
 			}
 			req.userId = decoded.id;
 			next();
@@ -52,11 +85,16 @@ class Utils {
 	}
 
 	static async authorizeBySession(req, res, next) {
-		if (req.session.user && req.cookies['connect.sid']) {
-			next();
+		try {
+			if (req.session.user && req.cookies['connect.sid']) {
+				next();
+			}
+			else {
+				return res.status(401).json({ type: false, message: 'Unauthorized' });
+			}
 		}
-		else {
-			return res.status(401).json({ type: false, message: 'Unauthorized' });
+		catch (error) {
+			return res.status(500).json({ type: false, message: error.message });
 		}
 	}
 
