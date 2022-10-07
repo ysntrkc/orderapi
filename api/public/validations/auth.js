@@ -2,20 +2,23 @@ import Joi from 'joi';
 
 class AuthValidation {
 
-	static async validateLogin(body) {
+	static async validateLogin(req, res) {
 		const schema = Joi.object({
 			email: Joi.string().email().required(),
-			password: Joi.string().required()
+			password: Joi.string().required(),
+			isRememberMe: Joi.boolean()
 		});
 
-		const { error } = schema.validate(body);
+		const { error } = schema.validate(req.body);
 		if (error) {
+			res.status(500);
 			return { type: false, message: error.details[0].message };
 		}
+		res.status(200);
 		return { type: true };
 	}
 
-	static async validateRegister(body) {
+	static async validateRegister(req, res) {
 		const schema = Joi.object({
 			username: Joi.string().alphanum().min(3).required().messages({
 				'string.alphanum': 'Username must contain only letters and numbers',
@@ -38,10 +41,12 @@ class AuthValidation {
 			})
 		});
 
-		const { error } = schema.validate(body);
+		const { error } = schema.validate(req.body);
 		if (error) {
+			res.status(500);
 			return { type: false, message: error.details[0].message };
 		}
+		res.status(200);
 		return { type: true };
 	}
 

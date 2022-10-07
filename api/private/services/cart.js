@@ -13,7 +13,7 @@ class CartService {
 			const product = await db.Products.findOne({ where: { id: item.productId } });
 
 			if (!product || product.stockQuantity < item.quantity) {
-				return { type: false, message: 'Product not found or not enough stock' };
+				return { type: false, message: 'Product not found or insufficient stock' };
 			}
 
 			let cart = await db.Carts.findOne({

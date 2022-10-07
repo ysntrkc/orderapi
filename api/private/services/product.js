@@ -2,17 +2,18 @@ import db from '../../src/models';
 
 class ProdService {
 
-	static async getProducts() {
+	static async getProducts(req, res) {
 		try {
 			const products = await db.Products.findAll();
-			return products;
+			res.status(200);
+			return { type: true, data: products, message: 'Products fetched successfully' };
 		}
 		catch (error) {
 			throw error;
 		}
 	}
 
-	static async addProduct(req) {
+	static async addProduct(req, res) {
 		try {
 			const { name, price, stock_quantity } = req.body;
 			const data = {
@@ -24,10 +25,12 @@ class ProdService {
 			};
 
 			if (await db.Products.findOne({ where: { name: name } })) {
+				res.status(409);
 				return { type: false, message: 'Product already exists' };
 			}
 
 			const product = await db.Products.create(data);
+			res.status(201);
 			return { data: product, type: true, message: 'Product added successfully' };
 		}
 		catch (error) {
@@ -35,7 +38,7 @@ class ProdService {
 		}
 	}
 
-	static async updateStockQuantity(req) {
+	static async updateStockQuantity(req, res) {
 		try {
 			const { id, stock_quantity } = req.body;
 			const product = await db.Products.findOne({ where: { id: id } });
@@ -44,10 +47,13 @@ class ProdService {
 					stockQuantity: stock_quantity,
 					updatedAt: new Date()
 				}, {
-					where: { id: id } });
+					where: { id: id }
+				});
+				res.status(200);
 				return { type: true, message: 'Product updated successfully' };
 			}
 			else {
+				res.status(404);
 				return { type: false, message: 'Product not found' };
 			}
 		}
