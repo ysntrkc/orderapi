@@ -6,6 +6,5 @@ const app = express();
 app.post('/login', AuthController.login);
 app.post('/register', AuthController.register);
 app.post('/logout', AuthController.logout);
-app.post('/loginWU', AuthController.loginWithUsername);
 
 export default app;

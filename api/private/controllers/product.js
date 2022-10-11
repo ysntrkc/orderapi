@@ -16,7 +16,7 @@ class ProdController {
 	 * @returns {Error}  default - Unexpected error
 	 */
 	static async getAllProducts(req, res) {
-		const result = await ProdService.getProducts();
+		const result = await ProdService.getProducts(req, res);
 		if (result.type) {
 			return res.json({ data: result.data, type: true, message: result.message });
 		}

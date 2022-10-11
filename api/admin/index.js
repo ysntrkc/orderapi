@@ -10,7 +10,7 @@ fs.readdirSync(routeDir).filter((file) => {
 }).forEach((file) => {
 	const routeName = file.split('.')[0];
 	import(`./routes/${routeName}`).then((route) => {
-		app.use(`/${routeName}`, Utils.authorizeSysAdmin, route.default);
+		app.use(`/${routeName}`, Utils.authorizeBySession, Utils.authorizeSysAdmin, route.default);
 	});
 });
 

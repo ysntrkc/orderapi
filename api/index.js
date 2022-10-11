@@ -9,8 +9,8 @@ import expressSwagger from 'express-swagger-generator';
 import options from './src/config/settings';
 
 const PORT = process.env.PORT || 3000;
-const oneDay = 1000 * 60 * 60 * 24;
-// const tenSeconds = 1000 * 10;
+// const oneDay = 1000 * 60 * 60 * 24;
+const tenSeconds = 1000 * 10;
 
 const app = express();
 
@@ -21,7 +21,8 @@ app.use(parser.urlencoded({ extended: true }));
 app.use(session({
 	secret: process.env.SESSION_SECRET,
 	saveUninitialized: true,
-	cookie: { maxAge: oneDay },
+	// cookie: { maxAge: oneDay },
+	cookie: { maxAge: tenSeconds },
 	resave: false
 }));
 

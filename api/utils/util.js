@@ -1,9 +1,5 @@
-import session from 'express-session';
 import jwt from 'jsonwebtoken';
 import db from '../src/models';
-import express from 'express';
-
-const app = express();
 
 class Utils {
 
@@ -15,7 +11,7 @@ class Utils {
 		return token;
 	}
 
-	static async resolveToken(token) {
+	static async decodeToken(token) {
 		try {
 			const decoded = jwt.verify(token, process.env.JWT_SECRET);
 			const user = await db.Users.findOne({
@@ -33,24 +29,6 @@ class Utils {
 		catch (error) {
 			return null;
 		}
-	}
-
-	static async authorizeToken(req, res, next) {
-		const token = req.headers.auth;
-
-		if (!token) {
-			res.status(401);
-			return { type: false, message: 'Unauthorized' };
-		}
-
-		jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-			if (err) {
-				res.status(401);
-				return { type: false, message: 'Unauthorized' };
-			}
-			req.userId = decoded.id;
-			next();
-		});
 	}
 
 	static authorizeUser(permId) {
@@ -90,11 +68,29 @@ class Utils {
 				next();
 			}
 			else {
-				return res.status(401).json({ type: false, message: 'Unauthorized' });
+				const token = await db.Users.findOne({
+					where: { id: req.cookies.userId},
+					attributes: [ 'refreshToken' ]
+				});
+
+				if (token.refreshToken) {
+					const user = await Utils.decodeToken(token.refreshToken);
+					req.session.user = {
+						id: user.id,
+						email: user.email,
+						username: user.username
+					};
+					next();
+				}
+				else {
+					res.status(401);
+					return res.json({ type: false, message: 'Unauthorized' });
+				}
 			}
 		}
 		catch (error) {
-			return res.status(500).json({ type: false, message: error.message });
+			res.status(500);
+			return res.json({ type: false, message: error.message });
 		}
 	}
 
@@ -115,11 +111,13 @@ class Utils {
 				next();
 			}
 			else {
-				return res.status(401).json({ type: false, message: 'Unauthorized' });
+				res.status(401);
+				return res.json({ type: false, message: 'Unauthorized' });
 			}
 		}
 		catch (error) {
-			return res.status(500).json({ type: false, message: error.message });
+			res.status(500);
+			return res.json({ type: false, message: error.message });
 		}
 	}
 

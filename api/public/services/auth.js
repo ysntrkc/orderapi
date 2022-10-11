@@ -37,41 +37,6 @@ class AuthService {
 		}
 	}
 
-	static async loginWithUsername(req, res) {
-		try {
-			const { username } = req.body;
-
-			const user = await db.Users.findOne({
-				where: { username: username },
-				attributes: { exclude: [ 'password' ] } });
-
-			if (user && user.refreshToken && Number(req.cookies.userId) === user.id) {
-				const user_ = await Utils.resolveToken(user.refreshToken);
-
-				if (user_) {
-					req.session.user = {
-						id: user_.id,
-						username: user_.username,
-						email: user_.email
-					};
-					res.status(200);
-					return { user: user_, type: true, message: 'Login successful' };
-				}
-				else {
-					res.status(401);
-					return { type: false, message: 'Invalid credentials' };
-				}
-			}
-			else {
-				res.status(401);
-				return { type: false, message: 'Invalid credentials' };
-			}
-		}
-		catch (error) {
-			throw error;
-		}
-	}
-
 	static async register(req, res) {
 		try {
 			const { username, email, password } = req.body;
@@ -115,6 +80,7 @@ class AuthService {
 
 	static async logout(req, res) {
 		try {
+			await db.Users.update({ refreshToken: null }, { where: { id: req.cookies.userId } });
 			req.session.destroy();
 			res.status(200);
 			return { type: true, message: 'Logout successful' };

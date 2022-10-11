@@ -42,16 +42,6 @@ class AuthController {
 		}
 	}
 
-	static async loginWithUsername(req, res) {
-		const result = await AuthService.loginWithUsername(req, res);
-		if (result.type) {
-			return res.json({ user: result.user, type: true, message: result.message });
-		}
-		else {
-			return res.json({ type: false, message: result.message });
-		}
-	}
-
 	/**
 	 * @route POST /public/auth/register
 	 * @group Auth
