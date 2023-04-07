@@ -1,6 +1,6 @@
 import db from '../../src/models';
 
-class AdminService {
+class User {
 
 	static async getAllUsers() {
 		try {
@@ -119,8 +119,9 @@ class AdminService {
 
 	static async getRoles() {
 		try {
-			const roles = await db.Roles.findAll();
-			return { type: true, message: 'Roles found', data: JSON.parse(JSON.stringify(roles)) };
+			const roles = await db.Roles.findAll({ exclude: [ 'createdAt', 'updatedAt' ] });
+			const parsedRoles = JSON.parse(JSON.stringify(roles));
+			return { type: true, message: 'Roles found', data: parsedRoles};
 		}
 		catch (error) {
 			throw error;
@@ -129,4 +130,4 @@ class AdminService {
 
 }
 
-export default AdminService;
+export default User;

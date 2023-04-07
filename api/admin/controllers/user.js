@@ -1,9 +1,9 @@
-import AdminService from '../services/admin';
+import User from '../services/user';
 
-class AdminController {
+class User {
 
 	static async getAllUsers(req, res) {
-		const result = await AdminService.getAllUsers();
+		const result = await User.getAllUsers();
 		if (result.type) {
 			return res.status(200).json({ data: result.data, type: true, message: result.message });
 		}
@@ -13,7 +13,7 @@ class AdminController {
 	}
 
 	static async getUser(req, res) {
-		const result = await AdminService.getUser(req.params.id);
+		const result = await User.getUser(req.params.id);
 		if (result.type) {
 			return res.status(200).json({ data: result.data, type: true, message: result.message });
 		}
@@ -23,7 +23,7 @@ class AdminController {
 	}
 
 	static async deleteUser(req, res) {
-		const result = await AdminService.deleteUser(req.params.id);
+		const result = await User.deleteUser(req.params.id);
 		if (result.type) {
 			return res.status(200).json({ type: true, message: result.message });
 		}
@@ -33,7 +33,7 @@ class AdminController {
 	}
 
 	static async createPermission(req, res) {
-		const result = await AdminService.createPermission(req.body);
+		const result = await User.createPermission(req.body);
 		if (result.type) {
 			return res.status(200).json({ type: true, message: result.message });
 		}
@@ -43,7 +43,7 @@ class AdminController {
 	}
 
 	static async addPermissionToRole(req, res) {
-		const result = await AdminService.addPermissionToRole(req.body);
+		const result = await User.addPermissionToRole(req.body);
 		if (result.type) {
 			return res.status(200).json({ type: true, message: result.message });
 		}
@@ -53,7 +53,7 @@ class AdminController {
 	}
 
 	static async getPermissions(req, res) {
-		const result = await AdminService.getPermissions();
+		const result = await User.getPermissions();
 		if (result.type) {
 			return res.status(200).json({ data: result.data, type: true, message: result.message });
 		}
@@ -63,7 +63,7 @@ class AdminController {
 	}
 
 	static async addRoleToUser(req, res) {
-		const result = await AdminService.addRoleToUser(req.body);
+		const result = await User.addRoleToUser(req.body);
 		if (result.type) {
 			return res.status(200).json({ type: true, message: result.message });
 		}
@@ -73,7 +73,7 @@ class AdminController {
 	}
 
 	static async getRoles(req, res) {
-		const result = await AdminService.getRoles();
+		const result = await User.getRoles();
 		if (result.type) {
 			return res.status(200).json({ data: result.data, type: true, message: result.message });
 		}
@@ -84,4 +84,4 @@ class AdminController {
 
 }
 
-export default AdminController;
+export default User;
