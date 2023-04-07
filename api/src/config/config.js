@@ -2,23 +2,23 @@ require('dotenv').config();
 
 module.exports = {
   "development": {
-    "username": "node_user",
-    "password": "12345",
-    "database": "orderapi",
+    "username": "postgres",
+    "password": "postgres",
+    "database": "orderapi_dev",
     "host": "localhost",
     "dialect": "postgres",
   },
   "test": {
-    "username": "node_user",
-    "password": "12345",
-    "database": "orderapi",
+    "username": "postgres",
+    "password": "postgres",
+    "database": "orderapi_test",
     "host": "localhost",
     "dialect": "postgres",
   },
-  "production": {
-    "username": "node_user",
-    "password": "12345",
-    "database": "orderapi",
+  "prod": {
+    "username": "postgres",
+    "password": "postgres",
+    "database": "orderapi_prod",
     "host": "localhost",
     "dialect": "postgres",
   }

@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import db from '../src/models';
 
-class Utils {
+class General {
 
 	static async createToken(user) {
 		const token = jwt.sign({ id: user.id, email: user.email, username: user.username }, process.env.JWT_SECRET, {
@@ -74,7 +74,7 @@ class Utils {
 				});
 
 				if (token.refreshToken) {
-					const user = await Utils.decodeToken(token.refreshToken);
+					const user = await General.decodeToken(token.refreshToken);
 					req.session.user = {
 						id: user.id,
 						email: user.email,
@@ -123,4 +123,4 @@ class Utils {
 
 }
 
-export default Utils;
+export default General;

@@ -1,22 +1,27 @@
-import CartService from '../services/cart';
-
 /**
  * @typedef item
- * @property {string} productId.required
- * @property {string} quantity.required
- * @property {string} userId.required
- */
+ * @property {integer} productId.required
+ * @property {integer} quantity.required
+ * @property {integer} userId.required
+*/
 
-class CartController {
+import CartService from '../services/cart';
+import CartValidation from '../validations/cart';
+
+class Cart {
 
 	/**
-	 * @route POST /public/cart/add
+	 * @route POST /private/cart/add
 	 * @group Cart - Operations about cart
 	 * @param {item.model} item.body.required
 	 * @returns {object} 200 - An array of user info
 	 * @returns {Error}  default - Unexpected error
 	 */
 	static async addToCart(req, res) {
+		const validationResult = CartValidation.addToCart(req.body);
+		if (!validationResult.type) {
+			return res.status(400).json({ type: false, message: validationResult.message });
+		}
 		const result = await CartService.addToCart(req, res);
 		if (result.type) {
 			return res.status(200).json({ data: result.data, type: true, message: result.message });
@@ -27,7 +32,7 @@ class CartController {
 	}
 
 	/**
-	 * @route GET /public/cart/get
+	 * @route GET /private/cart/get
 	 * @group Cart - Operations about cart
 	 * @returns {object} 200 - An array of user info
 	 * @returns {Error}  default - Unexpected error
@@ -44,4 +49,4 @@ class CartController {
 
 }
 
-export default CartController;
+export default Cart;

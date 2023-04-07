@@ -1,6 +1,6 @@
 import express from 'express';
 import fs from 'fs';
-import Utils from '../utils/util';
+import General from '../helpers/general';
 
 const app = express();
 const routeDir = __dirname + '/routes';
@@ -10,7 +10,7 @@ fs.readdirSync(routeDir).filter((file) => {
 }).forEach((file) => {
 	const routeName = file.split('.')[0];
 	import(`./routes/${routeName}`).then((route) => {
-		app.use(`/${routeName}`, Utils.authorizeBySession, Utils.authorizeSysAdmin, route.default);
+		app.use(`/${routeName}`, General.authorizeBySession, General.authorizeSysAdmin, route.default);
 	});
 });
 

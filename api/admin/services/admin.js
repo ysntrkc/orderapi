@@ -36,7 +36,7 @@ class AdminService {
 		try {
 			const user = await db.Users.findOne({ where: { id: Number(id) }, include: { model: db.Roles } });
 			if (user && user.Roles[0].id === 3) {
-				await db.User_Roles.destroy({ where: { userId: Number(id) } });
+				await db.UserRoles.destroy({ where: { userId: Number(id) } });
 				await db.Users.destroy({ where: { id: Number(id) } });
 				return { type: true, message: 'User deleted' };
 			}
@@ -72,7 +72,7 @@ class AdminService {
 				createdAt: new Date(),
 				updatedAt: new Date()
 			};
-			const permission = await db.Role_Permissions.create(data);
+			const permission = await db.RolePermissions.create(data);
 			return { type: true, message: 'Permission assigned to role', data: permission };
 		}
 		catch (error) {
@@ -107,7 +107,7 @@ class AdminService {
 					createdAt: new Date(),
 					updatedAt: new Date()
 				};
-				const userRole = await db.User_Roles.create(data);
+				const userRole = await db.UserRoles.create(data);
 				return { type: true, message: 'Role assigned to user', data: userRole };
 			}
 

@@ -1,13 +1,14 @@
-import ProdService from '../services/product';
-
 /**
  * @typedef product
  * @property {string} name.required
  * @property {number} price.required
  * @property {number} stock_quantity.required
- */
+*/
 
-class ProdController {
+import ProductService from '../services/product';
+import ProductValidation from '../validations/product';
+
+class Product {
 
 	/**
 	 * @route GET /private/product/get
@@ -16,12 +17,17 @@ class ProdController {
 	 * @returns {Error}  default - Unexpected error
 	 */
 	static async getAllProducts(req, res) {
-		const result = await ProdService.getProducts(req, res);
-		if (result.type) {
-			return res.json({ data: result.data, type: true, message: result.message });
+		try {
+			const result = await ProductService.getProducts(req, res);
+			if (result.type) {
+				return res.json({ data: result.data, type: true, message: result.message });
+			}
+			else {
+				return res.json({ type: false, message: result.message });
+			}
 		}
-		else {
-			return res.json({ type: false, message: result.message });
+		catch (error) {
+			return res.json({ type: false, message: error.message });
 		}
 	}
 
@@ -34,12 +40,21 @@ class ProdController {
 	 * @returns {Error}  default - Unexpected error
 	 */
 	static async addProduct(req, res) {
-		const result = await ProdService.addProduct(req, res);
-		if (result.type) {
-			return res.json({ data: result.data, type: true, message: result.message });
+		try {
+			const validationResult = ProductValidation.product(req.body);
+			if (!validationResult.type) {
+				return res.json({ type: false, message: validationResult.message });
+			}
+			const result = await ProductService.addProduct(req, res);
+			if (result.type) {
+				return res.json({ data: result.data, type: true, message: result.message });
+			}
+			else {
+				return res.json({ type: false, message: result.message });
+			}
 		}
-		else {
-			return res.json({ type: false, message: result.message });
+		catch (error) {
+			return res.json({ type: false, message: error.message });
 		}
 	}
 
@@ -52,15 +67,24 @@ class ProdController {
 	 * @returns {Error}  default - Unexpected error
 	 */
 	static async updateStock(req, res) {
-		const result = await ProdService.updateStockQuantity(req, res);
-		if (result.type) {
-			return res.json({ data: result.data, type: true, message: result.message });
+		try {
+			const validationResult = ProductValidation.product(req.body);
+			if (!validationResult.type) {
+				return res.json({ type: false, message: validationResult.message });
+			}
+			const result = await ProductService.updateStockQuantity(req, res);
+			if (result.type) {
+				return res.json({ data: result.data, type: true, message: result.message });
+			}
+			else {
+				return res.json({ type: false, message: result.message });
+			}
 		}
-		else {
-			return res.json({ type: false, message: result.message });
+		catch (error) {
+			return res.json({ type: false, message: error.message });
 		}
 	}
 
 }
 
-export default ProdController;
+export default Product;

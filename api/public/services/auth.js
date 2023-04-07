@@ -1,5 +1,5 @@
 import md5 from 'md5';
-import Utils from '../../utils/util';
+import General from '../../helpers/general';
 import db from '../../src/models';
 
 class AuthService {
@@ -13,7 +13,7 @@ class AuthService {
 				attributes: { exclude: [ 'password', 'refreshToken' ] } });
 
 			if (isRememberMe) {
-				const refreshToken = await Utils.createToken(user);
+				const refreshToken = await General.createToken(user);
 				await db.Users.update({ refreshToken: refreshToken }, { where: { id: user.id } });
 				res.cookie('userId', user.id, { maxAge: 1000 * 60 * 60 * 24 * 180 });
 			}
@@ -58,7 +58,7 @@ class AuthService {
 			const user = await db.Users.create(data);
 
 			if (user) {
-				await db.User_Roles.create({
+				await db.UserRoles.create({
 					userId: user.id,
 					roleId: 3,
 					createdAt: new Date(),
