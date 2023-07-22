@@ -36,7 +36,7 @@ class User {
 		try {
 			const user = await db.Users.findOne({ where: { id: Number(id) }, include: { model: db.Roles } });
 			if (user && user.Roles[0].id === 3) {
-				await db.UserRoles.destroy({ where: { userId: Number(id) } });
+				await db.UserRoles.destroy({ where: { user_id: Number(id) } });
 				await db.Users.destroy({ where: { id: Number(id) } });
 				return { type: true, message: 'User deleted' };
 			}
@@ -67,8 +67,8 @@ class User {
 	static async addPermissionToRole(body) {
 		try {
 			const data = {
-				roleId: body.roleId,
-				permissionId: body.permissionId,
+				role_id: body.role_id,
+				permission_id: body.permission_id,
 				createdAt: new Date(),
 				updatedAt: new Date()
 			};
@@ -97,13 +97,13 @@ class User {
 
 	static async addRoleToUser(body) {
 		try {
-			if (body.roleId === 1) {
+			if (body.role_id === 1) {
 				return { type: false, message: 'Cannot assign sys_admin role to user' };
 			}
 			else {
 				const data = {
-					userId: body.userId,
-					roleId: body.roleId,
+					user_id: body.user_id,
+					role_id: body.role_id,
 					createdAt: new Date(),
 					updatedAt: new Date()
 				};

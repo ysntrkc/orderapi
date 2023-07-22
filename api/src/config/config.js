@@ -5,21 +5,21 @@ module.exports = {
     "username": "postgres",
     "password": "postgres",
     "database": "orderapi_dev",
-    "host": "localhost",
+    "host": "127.0.0.1",
     "dialect": "postgres",
   },
   "test": {
     "username": "postgres",
     "password": "postgres",
     "database": "orderapi_test",
-    "host": "localhost",
+    "host": "127.0.0.1",
     "dialect": "postgres",
   },
   "prod": {
     "username": "postgres",
     "password": "postgres",
     "database": "orderapi_prod",
-    "host": "localhost",
+    "host": "127.0.0.1",
     "dialect": "postgres",
   }
 }

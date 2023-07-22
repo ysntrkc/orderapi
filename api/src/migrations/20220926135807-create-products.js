@@ -10,16 +10,20 @@ module.exports = {
       },
       name: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: false
       },
       price: {
         type: Sequelize.FLOAT,
-        allowNull: false,
+        allowNull: false
       },
-      stockQuantity: {
+      stock_quantity: {
         type: Sequelize.INTEGER,
         allowNull: false,
         defaultValue: 0
+      },
+      is_removed: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
       },
       createdAt: {
         allowNull: false,

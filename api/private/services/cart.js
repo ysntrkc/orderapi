@@ -5,43 +5,43 @@ class CartService {
 	static async addToCart(req) {
 		try {
 			const item = {
-				productId: req.body.productId,
+				product_id: req.body.product_id,
 				quantity: req.body.quantity,
-				userId: req.session.user.id
+				user_id: req.session.user.id
 			};
 
-			const product = await db.Products.findOne({ where: { id: item.productId } });
+			const product = await db.Products.findOne({ where: { id: item.product_id } });
 
-			if (!product || product.stockQuantity < item.quantity) {
+			if (!product || product.stock_quantity < item.quantity) {
 				return { type: false, message: 'Product not found or insufficient stock' };
 			}
 
 			let cart = await db.Carts.findOne({
-				where: { userId: item.userId },
+				where: { user_id: item.user_id },
 				include: {
 					model: db.CartItems
 				}
 			});
 
 			if (!cart) {
-				cart = await db.Carts.create({ userId: item.userId }).then(cr => {
+				cart = await db.Carts.create({ user_id: item.user_id }).then(cr => {
 					return cr;
 				}).catch(error => {
 					return { type: false, message: error.message };
 				});
 			}
 
-			item['cartId'] = cart.id;
+			item['cart_id'] = cart.id;
 
 			let cartItem = await db.CartItems.findOne({
-				where: { productId: item.productId, cartId: item.cartId }
+				where: { product_id: item.product_id, cart_id: item.cart_id }
 			});
 
 			if (!cartItem) {
 				cartItem = await db.CartItems.create({
-					productId: item.productId,
+					product_id: item.product_id,
 					quantity: item.quantity,
-					cartId: item.cartId
+					cart_id: item.cart_id
 				}).then(cItem => {
 					return cItem;
 				}).catch(err => {
@@ -52,15 +52,15 @@ class CartService {
 				await db.CartItems.update({
 					quantity: cartItem.quantity + item.quantity
 				}, {
-					where: { productId: item.productId, cartId: item.cartId }
+					where: { product_id: item.product_id, cart_id: item.cart_id }
 				});
 			}
 
 			if (product) {
 				await db.Products.update({
-					stockQuantity: product.stockQuantity - item.quantity
+					stock_quantity: product.stock_quantity - item.quantity
 				}, {
-					where: { id: item.productId } }
+					where: { id: item.product_id } }
 				);
 				await db.Carts.update({
 					total: cart.total + (product.price * item.quantity), updatedAt: new Date()
@@ -92,7 +92,7 @@ class CartService {
 
 			if (user) {
 				const cart = await db.Carts.findOne({
-					where: { userId: req.session.user.id },
+					where: { user_id: req.session.user.id },
 					include: {
 						model: db.CartItems
 					}

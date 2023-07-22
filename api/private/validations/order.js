@@ -4,7 +4,7 @@ class Order {
 
 	static createOrder(body) {
 		const schema = Joi.object({
-			userId: Joi.number().required(),
+			user_id: Joi.number().required(),
 			total: Joi.number().required(),
 			status: Joi.string().required()
 		});

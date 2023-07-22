@@ -31,7 +31,7 @@ class General {
 		}
 	}
 
-	static authorizeUser(permId) {
+	static authorizeUser(perm_id) {
 		return async (req, res, next) => {
 			try {
 				const user = await db.Users.findOne({
@@ -40,7 +40,7 @@ class General {
 						model: db.Roles,
 						include: {
 							model: db.Permissions,
-							where: { id: permId },
+							where: { id: perm_id },
 							through: []
 						},
 						through: []
@@ -49,7 +49,7 @@ class General {
 
 				const userInfo = JSON.parse(JSON.stringify(user));
 
-				if (userInfo.Roles.length > 0 && userInfo.Roles[0].Permissions[0].id === permId) {
+				if (userInfo.Roles.length > 0 && userInfo.Roles[0].Permissions[0].id === perm_id) {
 					next();
 				}
 				else {
@@ -69,12 +69,12 @@ class General {
 			}
 			else {
 				const token = await db.Users.findOne({
-					where: { id: req.cookies.userId},
-					attributes: [ 'refreshToken' ]
+					where: { id: req.cookies.user_id},
+					attributes: [ 'refresh_token' ]
 				});
 
-				if (token.refreshToken) {
-					const user = await General.decodeToken(token.refreshToken);
+				if (token.refresh_token) {
+					const user = await General.decodeToken(token.refresh_token);
 					req.session.user = {
 						id: user.id,
 						email: user.email,

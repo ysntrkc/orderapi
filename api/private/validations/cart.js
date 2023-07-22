@@ -4,9 +4,9 @@ class Cart {
 
 	static addToCart(body) {
 		const schema = Joi.object({
-			productId: Joi.string().required(),
+			product_id: Joi.string().required(),
 			quantity: Joi.string().required(),
-			userId: Joi.string().required(),
+			user_id: Joi.string().required(),
 		});
 		const { error } = schema.validate(body);
 		if (error) {

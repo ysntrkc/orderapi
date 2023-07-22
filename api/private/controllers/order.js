@@ -1,6 +1,6 @@
 /**
  * @typedef Order
- * @property {integer} userId.required
+ * @property {integer} user_id.required
  * @property {number} total.required
  * @property {string} status.required
  */

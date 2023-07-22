@@ -5,7 +5,7 @@ class OrderService {
 	static async createOrder(req, res) {
 		try {
 			const cart = await db.Carts.findOne({
-				where: { userId: req.session.user.id },
+				where: { user_id: req.session.user.id },
 				include: {
 					model: db.CartItems,
 					include: {
@@ -15,7 +15,7 @@ class OrderService {
 			});
 
 			const order = {
-				userId: req.session.user.id,
+				user_id: req.session.user.id,
 				total: cart.total,
 				status: 'pending'
 			};
@@ -29,8 +29,8 @@ class OrderService {
 
 			cart.CartItems.forEach(async item => {
 				const orderItem = {
-					orderId: newOrder.id,
-					productId: item.productId,
+					order_id: newOrder.id,
+					product_id: item.product_id,
 					quantity: item.quantity
 				};
 
@@ -42,8 +42,8 @@ class OrderService {
 				});
 			});
 
-			await db.CartItems.destroy({ where: { cartId: cart.id } });
-			await db.Carts.destroy({ where: { userId: req.session.user.id } });
+			await db.CartItems.destroy({ where: { cart_id: cart.id } });
+			await db.Carts.destroy({ where: { user_id: req.session.user.id } });
 
 			res.status(201);
 			return { type: true, message: 'Order created successfully' };
@@ -58,7 +58,7 @@ class OrderService {
 	static async getOrders(req, res) {
 		try {
 			const orders = await db.Orders.findAll({
-				where: { userId: req.session.user.id },
+				where: { user_id: req.session.user.id },
 				include: {
 					model: db.OrderItems
 				}

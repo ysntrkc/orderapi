@@ -19,7 +19,7 @@ class ProdService {
 			const data = {
 				name: name,
 				price: price,
-				stockQuantity: stock_quantity,
+				stock_quantity: stock_quantity,
 				createdAt: new Date(),
 				updatedAt: new Date()
 			};
@@ -44,7 +44,7 @@ class ProdService {
 			const product = await db.Products.findOne({ where: { id: id } });
 			if (product) {
 				await db.Products.update({
-					stockQuantity: stock_quantity,
+					stock_quantity: stock_quantity,
 					updatedAt: new Date()
 				}, {
 					where: { id: id }

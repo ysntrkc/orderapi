@@ -2,11 +2,11 @@
 
 ## Description
 
-This is a Node.js-based RESTful API for managing orders. It uses the Express framework and PostgreSQL for data storage. 
+This is a Node.js-based RESTful API for managing orders. It uses the Express framework and PostgreSQL for data storage.
 
 ## Installation
 
-1. Clone the repository: 
+1. Clone the repository:
 
 `git clone https://github.com/ysntrkc/orderapi.git`
 
@@ -27,12 +27,14 @@ npx sequelize-cli db:seed:all
 ```
 PORT=3000
 NODE_ENV=development
+HOST=localhost
+SEQUELIZE_LOGGING=false
+
 SESSION_SECRET=<your-session-secret>
 JWT_SECRET=<your-jwt-secret>
-HOST=localhost
 ```
 
-5. Run the server:
+1. Run the server:
 
 `npm start`
 

@@ -3,12 +3,11 @@ module.exports = {
 		node: true,
 		commonjs: true
 	},
-	'parser': '@babel/eslint-parser',
+	'parser': 'babel-eslint',
 	'parserOptions': {
 		'sourceType': 'module'
 	},
-	'extends': [ 'eslint:recommended'
-	],
+	'extends': [ 'eslint:recommended' ],
 	'rules': {
 		'indent': [
 			'error',
@@ -80,6 +79,9 @@ module.exports = {
 		],
 		'no-loop-func': [
 			'error'
+		],
+		'camel_case': [
+			'off'
 		],
 		'comma-dangle': [
 			'error',

@@ -10,12 +10,12 @@ class AuthService {
 
 			const user = await db.Users.findOne({
 				where: { email: email, password: md5(password) },
-				attributes: { exclude: [ 'password', 'refreshToken' ] } });
+				attributes: { exclude: [ 'password', 'refresh_token' ] } });
 
 			if (isRememberMe) {
-				const refreshToken = await General.createToken(user);
-				await db.Users.update({ refreshToken: refreshToken }, { where: { id: user.id } });
-				res.cookie('userId', user.id, { maxAge: 1000 * 60 * 60 * 24 * 180 });
+				const refresh_token = await General.createToken(user);
+				await db.Users.update({ refresh_token: refresh_token }, { where: { id: user.id } });
+				res.cookie('user_id', user.id, { maxAge: 1000 * 60 * 60 * 24 * 180 });
 			}
 
 			if (user) {
@@ -59,8 +59,8 @@ class AuthService {
 
 			if (user) {
 				await db.UserRoles.create({
-					userId: user.id,
-					roleId: 3,
+					user_id: user.id,
+					role_id: 3,
 					createdAt: new Date(),
 					updatedAt: new Date()
 				});
@@ -80,7 +80,7 @@ class AuthService {
 
 	static async logout(req, res) {
 		try {
-			await db.Users.update({ refreshToken: null }, { where: { id: req.cookies.userId } });
+			await db.Users.update({ refresh_token: null }, { where: { id: req.cookies.user_id } });
 			req.session.destroy();
 			res.status(200);
 			return { type: true, message: 'Logout successful' };

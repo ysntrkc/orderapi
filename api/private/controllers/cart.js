@@ -1,8 +1,8 @@
 /**
  * @typedef item
- * @property {integer} productId.required
+ * @property {integer} product_id.required
  * @property {integer} quantity.required
- * @property {integer} userId.required
+ * @property {integer} user_id.required
 */
 
 import CartService from '../services/cart';

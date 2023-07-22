@@ -14,56 +14,56 @@ module.exports = {
     */
     await queryInterface.bulkInsert('RolePermissions', [
       {
-        roleId: 1,
-        permissionId: 1,
+        role_id: 1,
+        permission_id: 1,
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        roleId: 1,
-        permissionId: 2,
+        role_id: 1,
+        permission_id: 2,
         createdAt: new Date(),
         updatedAt: new Date()
       }, {
-        roleId: 1,
-        permissionId: 3,
+        role_id: 1,
+        permission_id: 3,
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        roleId: 1,
-        permissionId: 4,
+        role_id: 1,
+        permission_id: 4,
         createdAt: new Date(),
         updatedAt: new Date()
       }, {
-        roleId: 1,
-        permissionId: 5,
+        role_id: 1,
+        permission_id: 5,
         createdAt: new Date(),
         updatedAt: new Date()
       }, {
-        roleId: 1,
-        permissionId: 6,
+        role_id: 1,
+        permission_id: 6,
         createdAt: new Date(),
         updatedAt: new Date()
       }, {
-        roleId: 2,
-        permissionId: 3,
+        role_id: 2,
+        permission_id: 3,
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        roleId: 2,
-        permissionId: 4,
+        role_id: 2,
+        permission_id: 4,
         createdAt: new Date(),
         updatedAt: new Date()
       }, {
-        roleId: 2,
-        permissionId: 5,
+        role_id: 2,
+        permission_id: 5,
         createdAt: new Date(),
         updatedAt: new Date()
       }, {
-        roleId: 2,
-        permissionId: 6,
+        role_id: 2,
+        permission_id: 6,
         createdAt: new Date(),
         updatedAt: new Date()
       }], {});

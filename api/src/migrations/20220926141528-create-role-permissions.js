@@ -8,19 +8,23 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      roleId: {
+      role_id: {
         type: Sequelize.INTEGER,
         references: {
           model: 'Roles',
           key: 'id'
-        }
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
       },
-      permissionId: {
+      permission_id: {
         type: Sequelize.INTEGER,
         references: {
           model: 'Permissions',
           key: 'id'
-        }
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
       },
       createdAt: {
         allowNull: false,

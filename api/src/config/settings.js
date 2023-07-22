@@ -7,24 +7,34 @@ const options = {
     },
     host: `${process.env.HOST}:${process.env.PORT}`,
     basePath: '/',
+    consumes: [
+      'application/json',
+      'application/form-data'
+    ],
     produces: [
-      'application/json'
+      'application/json',
+      'application/xml',
+      'application/form-data'
     ],
     schemes: ['http'],
-    // securityDefinition
     securityDefinitions: {
       JWT: {
         type: 'apiKey',
         in: 'header',
-        name: 'Authorization',
+        name: 'access-token',
         description: 'Users are authorized with JWT'
+      },
+      lang: {
+        type: 'apiKey',
+        in: 'header',
+        name: 'lang',
+        description: 'Language'
       }
     }
   },
   basedir: __dirname,
   files: [
-    '../../public/controllers/**/*.js',
-    '../../private/controllers/**/*.js'
+    '../../controllers/**/*.js',
   ]
 }
 
