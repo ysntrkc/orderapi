@@ -1,5 +1,5 @@
 import UserController from '../controllers/user';
-import General from '../../helpers/general';
+import General from '../../helpers/General';
 import express from 'express';
 
 const app = express();

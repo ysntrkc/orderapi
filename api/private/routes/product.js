@@ -1,6 +1,6 @@
 import express from 'express';
 import ProductController from '../controllers/product.js';
-import General from '../../helpers/general';
+import General from '../../helpers/General.js';
 
 const app = express();
 

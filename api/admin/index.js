@@ -1,6 +1,6 @@
 import express from 'express';
 import fs from 'fs';
-import General from '../helpers/general';
+import General from '../helpers/General';
 
 const app = express();
 const routeDir = __dirname + '/routes';

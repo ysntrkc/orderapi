@@ -3,21 +3,22 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Permissions extends Model {
+  class OrderStatuses extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Perissions.hasMany(models.RolePermissions, { foreignKey: 'permission_id' });
+      OrderStatuses.hasMany(models.Orders, { foreignKey: 'status_id' });
     }
   }
-  Permissions.init({
-    name: DataTypes.STRING
+  OrderStatuses.init({
+    name: DataTypes.STRING,
+    is_removed: DataTypes.BOOLEAN
   }, {
     sequelize,
-    modelName: 'Permissions',
+    modelName: 'OrderStatuses',
   });
-  return Permissions;
+  return OrderStatuses;
 };

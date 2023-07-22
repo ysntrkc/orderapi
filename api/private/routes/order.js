@@ -1,5 +1,5 @@
 import OrderController from '../controllers/order';
-import General from '../../helpers/general';
+import General from '../../helpers/General';
 import express from 'express';
 
 const app = express();

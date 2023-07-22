@@ -1,0 +1,38 @@
+{ // for path intelisense
+    // required extension 'Path Intelisense'
+    "compilerOptions": {
+        "baseUrl": "./",
+        "paths": {
+            "@root": [
+                ""
+            ],
+            "@root/*": [
+                "*"
+            ],
+            "@api": [
+                "api"
+            ],
+            "@api/*": [
+                "api/*"
+            ],
+            "@helpers": [
+                "helpers"
+            ],
+            "@helpers/*": [
+                "helpers/*"
+            ],
+            "@src": [
+                "src"
+            ],
+            "@src/*": [
+                "src/*"
+            ],
+            "@models": [
+                "models"
+            ],
+            "@models/*": [
+                "models/*"
+            ],
+        }
+    }
+}

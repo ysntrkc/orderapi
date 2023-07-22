@@ -1,5 +1,5 @@
 import md5 from 'md5';
-import General from '../../helpers/general';
+import General from '../../helpers/General';
 import db from '../../src/models';
 
 class AuthService {

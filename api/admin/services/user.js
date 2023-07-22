@@ -52,7 +52,7 @@ class User {
 	static async createPermission(body) {
 		try {
 			const data = {
-				description: body.description,
+				name: body.name,
 				createdAt: new Date(),
 				updatedAt: new Date()
 			};
