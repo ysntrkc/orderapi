@@ -32,6 +32,7 @@ SEQUELIZE_LOGGING=false
 
 SESSION_SECRET=<your-session-secret>
 JWT_SECRET=<your-jwt-secret>
+PASSWORD_SALT=<your-password-salt>
 ```
 
 1. Run the server:

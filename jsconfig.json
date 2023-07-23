@@ -16,22 +16,22 @@
                 "api/*"
             ],
             "@helpers": [
-                "helpers"
+                "api/helpers"
             ],
             "@helpers/*": [
-                "helpers/*"
+                "api/helpers/*"
             ],
             "@src": [
-                "src"
+                "api/src"
             ],
             "@src/*": [
-                "src/*"
+                "api/src/*"
             ],
             "@models": [
-                "models"
+                "api/src/models"
             ],
             "@models/*": [
-                "models/*"
+                "api/src/models/*"
             ],
         }
     }

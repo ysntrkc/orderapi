@@ -3,3 +3,8 @@ export const RoleTypes = {
     ADMIN: 2,
     USER: 3
 };
+
+export const ResponseTypes = {
+    SUCCESS: 'success',
+    ERROR: 'error'
+};
