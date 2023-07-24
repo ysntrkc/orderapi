@@ -18,7 +18,7 @@
 import AuthService from '../services/Auth';
 import AuthValidation from '../validations/Auth';
 import Response from '../helpers/Response';
-import { RoleTypes } from '../src/enum';
+import { ResponseTypes } from '../src/enum';
 
 class Auth {
 
@@ -35,16 +35,16 @@ class Auth {
 		try {
 			const validationResult = AuthValidation.login(req.body, req.headers.lang);
 			if (!validationResult.type) {
-				return res.json(Response.response(RoleTypes.ERROR, validationResult.message));
+				return res.json(Response.response(ResponseTypes.ERROR, validationResult.message));
 			}
 			const result = await AuthService.login(req, res);
 			if (!result.type) {
-				return res.json(Response.response(RoleTypes.ERROR, result.message));
+				return res.json(Response.response(ResponseTypes.ERROR, result.message));
 			}
-			return res.json(Response.response(RoleTypes.SUCCESS, result.message, result.user));
+			return res.json(Response.response(ResponseTypes.SUCCESS, result.message, result.user));
 		}
 		catch (error) {
-			return res.json(Response.response(RoleTypes.ERROR, error.message));
+			return res.json(Response.response(ResponseTypes.ERROR, error.message));
 		}
 	}
 
@@ -60,16 +60,16 @@ class Auth {
 		try {
 			const validationResult = AuthValidation.register(req.body, req.headers.lang);
 			if (!validationResult.type) {
-				return res.json(Response.response(RoleTypes.ERROR, validationResult.message));
+				return res.json(Response.response(ResponseTypes.ERROR, validationResult.message));
 			}
 			const result = await AuthService.register(req);
 			if (!result.type) {
-				return res.json(Response.response(RoleTypes.ERROR, result.message));
+				return res.json(Response.response(ResponseTypes.ERROR, result.message));
 			}
-			return res.json(Response.response(RoleTypes.SUCCESS, result.message));
+			return res.json(Response.response(ResponseTypes.SUCCESS, result.message));
 		}
 		catch (error) {
-			return res.json(Response.response(RoleTypes.ERROR, error.message));
+			return res.json(Response.response(ResponseTypes.ERROR, error.message));
 		}
 	}
 
@@ -84,12 +84,12 @@ class Auth {
 		try {
 			const result = await AuthService.logout(req);
 			if (!result.type) {
-				return res.json(Response.response(RoleTypes.ERROR, result.message));
+				return res.json(Response.response(ResponseTypes.ERROR, result.message));
 			}
-			return res.json(Response.response(RoleTypes.SUCCESS, result.message));
+			return res.json(Response.response(ResponseTypes.SUCCESS, result.message));
 		}
 		catch (error) {
-			return res.json(Response.response(RoleTypes.ERROR, error.message));
+			return res.json(Response.response(ResponseTypes.ERROR, error.message));
 		}
 	}
 
