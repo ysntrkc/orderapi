@@ -1,6 +1,6 @@
 import path from 'path';
 import express from 'express';
-import General from '@helpers/General';
+import General from '../helpers/General';
 
 const app = express();
 const basename = path.basename(__filename);

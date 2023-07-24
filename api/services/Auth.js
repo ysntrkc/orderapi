@@ -1,7 +1,7 @@
 import md5 from 'md5';
-import db from '@models';
+import db from '../src/models';
 import General from '@helpers/General';
-import { RoleTypes } from '../src/enum';
+import { RoleTypes } from '@src/enum';
 
 class Auth {
 

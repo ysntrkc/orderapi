@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import db from '@models';
+import db from '../src/models';
 
 class General {
 

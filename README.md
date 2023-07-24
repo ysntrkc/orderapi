@@ -35,7 +35,7 @@ JWT_SECRET=<your-jwt-secret>
 PASSWORD_SALT=<your-password-salt>
 ```
 
-1. Run the server:
+5. Run the server:
 
 `npm start`
 

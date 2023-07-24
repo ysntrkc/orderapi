@@ -1,23 +1,13 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
-import session from 'express-session';
 import cors from 'cors';
 import http from 'http';
+import session from 'express-session';
 import expressSwagger from 'express-swagger-generator';
-import moduleAlias from 'module-alias';
 
-import options from './src/config/settings';
 import routes from './routes';
-
-moduleAlias.addAliases({
-	'@root': __dirname,
-	'@api': __dirname + '/api',
-	'@helpers': __dirname + '/api/helpers',
-	'@src': __dirname + '/api/src',
-	'@models': __dirname + '/api/src/models',
-});
-
+import options from './src/config/settings';
 const PORT = process.env.PORT || 3000;
 
 const app = express();

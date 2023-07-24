@@ -17,8 +17,8 @@
 
 import AuthService from '../services/Auth';
 import AuthValidation from '../validations/Auth';
-import Response from '@helpers/Response';
-import { RoleTypes } from '@src/enum';
+import Response from '../helpers/Response';
+import { RoleTypes } from '../src/enum';
 
 class Auth {
 
