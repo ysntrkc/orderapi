@@ -8,11 +8,15 @@ This is a Node.js-based RESTful API for managing orders. It uses the Express fra
 
 1. Clone the repository:
 
-`git clone https://github.com/ysntrkc/orderapi.git`
+```
+git clone https://github.com/ysntrkc/orderapi.git
+```
 
 2. Install dependencies:
 
-`npm install`
+```
+npm install
+```
 
 3. Create database:
 
@@ -37,7 +41,9 @@ PASSWORD_SALT=<your-password-salt>
 
 5. Run the server:
 
-`npm start`
+```
+npm start
+```
 
 ## Usage
 
