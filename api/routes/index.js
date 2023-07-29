@@ -13,10 +13,25 @@ require('fs')
 		const routeName = General.getFileRoute(file);
 
 		if (routeName === 'auth') {
-			app.use(`/${routeName}`, require(`./${file}`).default);
+			app.use(
+				`/${routeName}`,
+				require(`./${file}`).default
+			);
+		}
+		else if ([ 'user', 'role', 'permission' ].includes(routeName)) {
+			app.use(
+				`/${routeName}`,
+				General.authorizeBySession,
+				General.authorizeSysAdmin,
+				require(`./${file}`).default
+			);
 		}
 		else {
-			app.use(`/${routeName}`, General.authorization, require(`./${file}`).default);
+			app.use(
+				`/${routeName}`,
+				General.authorizeBySession,
+				require(`./${file}`).default
+			);
 		}
 	});
 

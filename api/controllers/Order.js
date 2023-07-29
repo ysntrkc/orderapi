@@ -7,6 +7,7 @@ class Order {
 	/**
 	 * @route POST /api/order
 	 * @group Order - Operations about order
+	 * @summary Create a new order
 	 * @returns {object} 200 - Success
 	 * @returns {Error}  default - Unexpected error
 	 */
@@ -26,6 +27,7 @@ class Order {
 	/**
 	 * @route GET /api/order
 	 * @group Order - Operations about order
+	 * @summary Get order
 	 * @returns {object} 200 - Success
 	 * @returns {Error}  default - Unexpected error
 	 */
@@ -45,6 +47,7 @@ class Order {
 	/**
 	 * @route GET /api/order/all
 	 * @group Order - Operations about order
+	 * @summary Get all orders
 	 * @returns {object} 200 - Success
 	 * @returns {Error}  default - Unexpected error
 	 */
@@ -63,9 +66,9 @@ class Order {
 
 	// TODO: use status_id and take it from request query
 	/**
-	 * @route PUT /api/order?id={id}
+	 * @route PUT /api/order/{id}
 	 * @group Order - Operations about order
-	 * @param {integer} id.query.required
+	 * @param {integer} id.path.required
 	 * @param {string} status.body.required
 	 * @returns {object} 200 - Success
 	 * @returns {Error}  default - Unexpected error
