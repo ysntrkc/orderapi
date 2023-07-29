@@ -8,3 +8,5 @@ app.get('/:id', UserController.get);
 app.delete('/:id', UserController.delete);
 app.put('/:id', UserController.update);
 app.post('/assign-role', UserController.assignRole);
+
+export default app;

@@ -6,3 +6,5 @@ const app = express();
 
 app.post('/', General.authorizeUser(1), PermissionController.create);
 app.get('/', PermissionController.get);
+
+export default app;
