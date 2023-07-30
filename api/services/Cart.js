@@ -18,27 +18,24 @@ class Cart {
 
 			const cart = await db.Carts.findOrCreate({
 				where: { user_id: item.user_id },
-				include: {
-					model: db.CartItems
-				},
 				defaults: { user_id: item.user_id }
 			});
 
 			item['cart_id'] = cart[0].id;
 
-			let cartItem = await db.CartItems.findOne({
+			const cartItem = await db.CartItems.findOne({
 				where: { product_id: item.product_id, cart_id: item.cart_id }
 			});
 
 			if (!cartItem) {
-				cartItem = await db.CartItems.create({
+				await db.CartItems.create({
 					product_id: item.product_id,
 					quantity: item.quantity,
 					cart_id: item.cart_id
 				});
 			}
 			else {
-				cartItem = await db.CartItems.update({
+				await db.CartItems.update({
 					quantity: cartItem.quantity + item.quantity
 				}, {
 					where: { product_id: item.product_id, cart_id: item.cart_id }
@@ -53,11 +50,11 @@ class Cart {
 			await db.Carts.update({
 				total: cart[0].total + (product.price * item.quantity)
 			}, {
-				where: { id: cart.id }
+				where: { id: cart[0].id }
 			});
 
 			// TODO: Add localization
-			return { type: true, message: 'Product added to cart successfully', data: cartItem };
+			return { type: true, message: 'Product added to cart successfully' };
 		}
 		catch (error) {
 			return { type: false, message: error.message };
@@ -67,14 +64,31 @@ class Cart {
 	static async getCart(req) {
 		try {
 			const cart = await db.Carts.findOne({
-				where: { user_id: req.session.user.id },
+				where: {
+					user_id: req.session.user.id,
+					is_removed: false
+				},
+				attributes: [
+					'id',
+					'total'
+				],
 				include: {
-					model: db.CartItems,
-					include: {
-						model: db.Products
+					model: db.Products,
+					attributes: [
+						'id',
+						'name',
+						'price'
+					],
+					through: {
+						attributes: [ 'quantity' ]
 					}
 				}
 			});
+
+			// TODO: Add localization
+			if (!cart) {
+				return { type: false, message: 'Cart not found' };
+			}
 
 			// TODO: Add localization
 			return { type: true, message: 'Cart retrieved successfully', data: cart };

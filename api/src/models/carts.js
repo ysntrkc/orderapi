@@ -12,17 +12,17 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Carts.belongsTo(models.Users, { foreignKey: 'user_id' });
 
-      Carts.hasMany(models.CartItems, { foreignKey: 'cart_id' });
-
       Carts.belongsToMany(models.Products, {
         through: models.CartItems,
-        foreignKey: 'cart_id'
+        foreignKey: 'cart_id',
+        otherKey: 'product_id'
       });
     }
   }
   Carts.init({
     user_id: DataTypes.INTEGER,
-    total: DataTypes.FLOAT
+    total: DataTypes.FLOAT,
+    is_removed: DataTypes.BOOLEAN
   }, {
     sequelize,
     modelName: 'Carts',

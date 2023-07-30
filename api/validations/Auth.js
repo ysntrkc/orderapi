@@ -6,7 +6,6 @@ class Auth {
 	static login(data, lang) {
 		const schema = Joi.object({
 			email: Joi.string().email(),
-			username: Joi.string().alphanum().min(3),
 			isRememberMe: Joi.boolean(),
 			password: Joi.string().required().min(8).pattern(
 				new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&._])[A-Za-z\\d@$!%*?&._]{8,}$')

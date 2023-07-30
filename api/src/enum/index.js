@@ -8,3 +8,8 @@ export const ResponseTypes = {
     SUCCESS: 'success',
     ERROR: 'error'
 };
+
+export const OrderStatusTypes = {
+    PENDING: 1,
+    COMPLETED: 2
+};

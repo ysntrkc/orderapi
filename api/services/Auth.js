@@ -1,7 +1,7 @@
 import md5 from 'md5';
 import db from '../src/models';
-import General from '@helpers/General';
-import { RoleTypes } from '@src/enum';
+import General from '../helpers/General';
+import { RoleTypes } from '../src/enum';
 
 class Auth {
 
@@ -36,7 +36,7 @@ class Auth {
 			};
 
 			// TODO: Add localization
-			return { user: user, type: true, message: 'Login successful', session: req.session };
+			return { type: true, message: 'Login successful' };
 		}
 		catch (error) {
 			return { type: false, message: error.message };
@@ -90,6 +90,7 @@ class Auth {
 
 	static async logout(req, res) {
 		try {
+			// TODO: remove refresh token
 			await db.Users.update({ refresh_token: null }, { where: { id: req.session.user.id } });
 			req.session.destroy();
 			res.clearCookie('user_id');
