@@ -6,13 +6,13 @@ module.exports = {
     await queryInterface.bulkInsert('OrderStatuses', [
       {
         name: 'Pending',
-        created_at: new Date(),
-        updated_at: new Date()
+        createdAt: new Date(),
+        updatedAt: new Date()
       },
       {
         name: 'Completed',
-        created_at: new Date(),
-        updated_at: new Date()
+        createdAt: new Date(),
+        updatedAt: new Date()
       }
     ]);
   },
