@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import db from '../src/models';
+import { Lang } from '../src/enum';
 
 class General {
 
@@ -53,7 +54,7 @@ class General {
 					next();
 				}
 				else {
-					return res.status(401).json({ type: false, message: 'Unauthorized' });
+					return res.status(401).json({ type: false, message: Lang[req.headers.lang].Global.unauthorized });
 				}
 			}
 			catch (error) {
@@ -84,7 +85,7 @@ class General {
 				}
 				else {
 					res.status(401);
-					return res.json({ type: false, message: 'Unauthorized' });
+					return res.json({ type: false, message: Lang[req.headers.lang].Global.unauthorized });
 				}
 			}
 		}
@@ -112,7 +113,7 @@ class General {
 			}
 			else {
 				res.status(401);
-				return res.json({ type: false, message: 'Unauthorized' });
+				return res.json({ type: false, message: Lang[req.headers.lang].Global.unauthorized });
 			}
 		}
 		catch (error) {

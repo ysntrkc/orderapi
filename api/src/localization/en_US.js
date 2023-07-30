@@ -1,4 +1,7 @@
 export default {
+	Global: {
+		unauthorized: 'Unauthorized access',
+	},
 	Auth: {
 		userNotFound: 'User not found',
 		loginSuccess: 'Login successful',

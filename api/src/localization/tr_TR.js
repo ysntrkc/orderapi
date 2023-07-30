@@ -1,4 +1,7 @@
 export default {
+  Global: {
+    unauthorized: 'Yetkisiz erişim',
+  },
 	Auth: {
     userNotFound: 'Kullanıcı bulunamadı',
     loginSuccess: 'Giriş başarılı',
