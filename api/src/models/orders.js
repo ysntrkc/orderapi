@@ -15,14 +15,18 @@ module.exports = (sequelize, DataTypes) => {
 
       Orders.belongsToMany(models.Products, {
         through: models.OrderItems,
-        foreignKey: 'order_id'
+        foreignKey: 'order_id',
+        otherKey: 'product_id'
       });
+
+      Orders.hasMany(models.OrderItems, { foreignKey: 'order_id' });
     }
   }
   Orders.init({
     user_id: DataTypes.INTEGER,
     total: DataTypes.FLOAT,
-    status_id: DataTypes.INTEGER
+    status_id: DataTypes.INTEGER,
+    is_removed: DataTypes.BOOLEAN
   }, {
     sequelize,
     modelName: 'Orders',

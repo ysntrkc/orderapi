@@ -14,13 +14,15 @@ module.exports = (sequelize, DataTypes) => {
 
       Carts.belongsToMany(models.Products, {
         through: models.CartItems,
-        foreignKey: 'cart_id'
+        foreignKey: 'cart_id',
+        otherKey: 'product_id'
       });
     }
   }
   Carts.init({
     user_id: DataTypes.INTEGER,
-    total: DataTypes.FLOAT
+    total: DataTypes.FLOAT,
+    is_removed: DataTypes.BOOLEAN
   }, {
     sequelize,
     modelName: 'Carts',

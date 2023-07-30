@@ -15,7 +15,7 @@ class Product {
 			if (!product[1]) {
 				return { type: false, message: 'Product already exists' };
 			}
-			return { type: true, message: 'Product added successfully', data: product[0] };
+			return { type: true, message: 'Product added successfully' };
 		}
 		catch (error) {
 			return { type: false, message: error.message };
@@ -24,7 +24,16 @@ class Product {
 
 	static async getAll(req) {
 		try {
-			const products = await db.Products.findAll({ where: { is_removed: false } });
+			const products = await db.Products.findAll({
+				where: {
+					is_removed: false
+				},
+				attributes: [
+					'id',
+					'name',
+					'stock_quantity',
+					'price'
+				] });
 			// TODO: add localization
 			return { type: true, message: 'Products fetched successfully', data: products };
 		}

@@ -5,10 +5,10 @@ class Permission {
 	static async create(req) {
 		try {
 			const data = req.body;
-			const permission = await db.Permissions.create(data);
+			await db.Permissions.create(data);
 
 			// TODO: add localization
-			return { type: true, message: 'Permission created', data: permission };
+			return { type: true, message: 'Permission created' };
 		}
 		catch (error) {
 			return { type: false, message: error.message };
@@ -18,7 +18,8 @@ class Permission {
 	static async get(req) {
 		try {
 			const permissions = await db.Permissions.findAll({
-				where: { is_removed: false }
+				where: { is_removed: false },
+				attributes: [ 'id', 'name' ]
 			});
 
 			// TODO: add localization

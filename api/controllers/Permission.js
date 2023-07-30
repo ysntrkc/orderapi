@@ -24,7 +24,7 @@ class Permission {
 			if (!validationResult.type) {
 				return res.json(Response.response(ResponseTypes.ERROR, validationResult.message));
 			}
-			const result = await PermissionSevice.create(req);
+			const result = await PermissionSevice.create(req, res);
 			if (!result.type) {
 				return res.json(Response.response(ResponseTypes.ERROR, result.message));
 			}
@@ -44,7 +44,7 @@ class Permission {
 	 */
 	static async get(req, res) {
 		try {
-			const result = await PermissionSevice.get(req);
+			const result = await PermissionSevice.get(req, res);
 			if (!result.type) {
 				return res.json(Response.response(ResponseTypes.ERROR, result.message));
 			}

@@ -5,7 +5,8 @@ class Role {
 	static async get(req) {
 		try {
 			const roles = await db.Roles.findAll({
-				where: { is_removed: false }
+				where: { is_removed: false },
+				attributes: [ 'id', 'name' ]
 			});
 
 			// TODO: add localization
@@ -37,7 +38,7 @@ class Role {
 			if (!rolePermission[1]) {
 				return { type: false, message: 'Permission already assigned to role' };
 			}
-			return { type: true, message: 'Permission assigned to role', data: rolePermission[0] };
+			return { type: true, message: 'Permission assigned to role' };
 		}
 		catch (error) {
 			return { type: false, message: error.message };

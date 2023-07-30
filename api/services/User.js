@@ -110,7 +110,7 @@ class User {
 			if (!userRole[1]) {
 				return { type: false, message: 'Role already assigned to user' };
 			}
-			return { type: true, message: 'Role assigned to user', data: userRole[0] };
+			return { type: true, message: 'Role assigned to user' };
 		}
 		catch (error) {
 			return { type: false, message: error.message };

@@ -1,7 +1,6 @@
 /**
  * @typedef LoginUser
- * @property {string} email
- * @property {string} username
+ * @property {string} email.required
  * @property {string} password.required
  * @property {boolean} isRememberMe
  */
@@ -62,7 +61,7 @@ class Auth {
 			if (!validationResult.type) {
 				return res.json(Response.response(ResponseTypes.ERROR, validationResult.message));
 			}
-			const result = await AuthService.register(req);
+			const result = await AuthService.register(req, res);
 			if (!result.type) {
 				return res.json(Response.response(ResponseTypes.ERROR, result.message));
 			}
@@ -82,7 +81,7 @@ class Auth {
 	 */
 	static async logout(req, res) {
 		try {
-			const result = await AuthService.logout(req);
+			const result = await AuthService.logout(req, res);
 			if (!result.type) {
 				return res.json(Response.response(ResponseTypes.ERROR, result.message));
 			}

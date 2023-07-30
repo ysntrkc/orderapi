@@ -2,7 +2,6 @@
  * @typedef CartItem
  * @property {integer} product_id.required
  * @property {integer} quantity.required
- * @property {integer} user_id.required
  */
 
 import CartService from '../services/Cart';
@@ -13,7 +12,7 @@ import { ResponseTypes } from '../src/enum';
 class Cart {
 
 	/**
-	 * @route POST /private/cart/add
+	 * @route POST /cart/add
 	 * @group Cart - Operations about cart
 	 * @param {CartItem.model} CartItem.body.required
 	 * @returns {object} 200 - Success response
@@ -37,14 +36,14 @@ class Cart {
 	}
 
 	/**
-	 * @route GET /private/cart
+	 * @route GET /cart
 	 * @group Cart - Operations about cart
 	 * @returns {object} 200 - Success response
 	 * @returns {Error}  default - Unexpected error
 	 */
 	static async getCart(req, res) {
 		try {
-			const result = await CartService.getCart(req);
+			const result = await CartService.getCart(req, res);
 			if (!result.type) {
 				return res.json(Response.response(ResponseTypes.ERROR, result.message));
 			}

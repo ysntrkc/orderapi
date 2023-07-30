@@ -20,7 +20,7 @@ class Role {
 	 */
 	static async get(req, res) {
 		try {
-			const result = await RoleSevice.get(req);
+			const result = await RoleSevice.get(req, res);
 			if (!result.type) {
 				return res.json(Response.response(ResponseTypes.ERROR, result.message));
 			}
@@ -45,7 +45,7 @@ class Role {
 			if (!validationResult.type) {
 				return res.json(Response.response(ResponseTypes.ERROR, validationResult.message));
 			}
-			const result = await RoleSevice.assignPermission(req);
+			const result = await RoleSevice.assignPermission(req, res);
 			if (!result.type) {
 				return res.json(Response.response(ResponseTypes.ERROR, result.message));
 			}
