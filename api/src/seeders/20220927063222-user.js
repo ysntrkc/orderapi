@@ -1,7 +1,6 @@
 'use strict';
 require('dotenv').config({ path: './env/development.env' });
 const md5 = require('md5');
-console.log(process.env.PASSWORD_SALT);
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.bulkInsert('Users', [{
