@@ -1,30 +1,30 @@
 /**
- * @typedef CartItem
- * @property {integer} product_id.required
- * @property {integer} quantity.required
+ * @typedef CreatePermission
+ * @property {string} name.required
  */
 
-import CartService from '../services/Cart';
-import CartValidation from '../validations/Cart';
+import PermissionSevice from '../services/Permission';
+import PermissionValidation from '../validations/Permission';
 import Response from '../helpers/Response';
 import { ResponseTypes } from '../src/enum';
 
-class Cart {
+class Permission {
 
 	/**
-	 * @route POST /cart/add
-	 * @group Cart - Operations about cart
-	 * @param {CartItem.model} CartItem.body.required
-	 * @returns {object} 200 - Success response
+	 * @route POST /permission
+	 * @group Permission - Operations about permission
+	 * @summary Create a new permission
+	 * @param {CreatePermission.model} permission.body.required
+	 * @returns {object} 200 - Success message
 	 * @returns {Error}  default - Unexpected error
 	 */
-	static async addToCart(req, res) {
+	static async create(req, res) {
 		try {
-			const validationResult = CartValidation.addToCart(req.body, req.headers.lang);
+			const validationResult = PermissionValidation.create(req.body);
 			if (!validationResult.type) {
 				return res.json(Response.response(ResponseTypes.ERROR, validationResult.message));
 			}
-			const result = await CartService.addToCart(req, res);
+			const result = await PermissionSevice.create(req, res);
 			if (!result.type) {
 				return res.json(Response.response(ResponseTypes.ERROR, result.message));
 			}
@@ -36,14 +36,15 @@ class Cart {
 	}
 
 	/**
-	 * @route GET /cart
-	 * @group Cart - Operations about cart
-	 * @returns {object} 200 - Success response
+	 * @route GET /permission
+	 * @group Permission - Operations about permission
+	 * @summary Get all permissions
+	 * @returns {object} 200 - Success
 	 * @returns {Error}  default - Unexpected error
 	 */
-	static async getCart(req, res) {
+	static async get(req, res) {
 		try {
-			const result = await CartService.getCart(req, res);
+			const result = await PermissionSevice.get(req, res);
 			if (!result.type) {
 				return res.json(Response.response(ResponseTypes.ERROR, result.message));
 			}
@@ -56,4 +57,4 @@ class Cart {
 
 }
 
-export default Cart;
+export default Permission;

@@ -10,11 +10,16 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Perissions.hasMany(models.RolePermissions, { foreignKey: 'permission_id' });
+      Permissions.belongsToMany(models.Roles, {
+        through: 'RolePermissions',
+        foreignKey: 'permission_id',
+        otherKey: 'role_id'
+      });
     }
   }
   Permissions.init({
-    name: DataTypes.STRING
+    name: DataTypes.STRING,
+    is_removed: DataTypes.BOOLEAN
   }, {
     sequelize,
     modelName: 'Permissions',

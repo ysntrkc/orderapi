@@ -16,7 +16,7 @@ const options = {
       'application/xml',
       'application/form-data'
     ],
-    schemes: ['http'],
+    schemes: ['http', 'https'],
     securityDefinitions: {
       JWT: {
         type: 'apiKey',
