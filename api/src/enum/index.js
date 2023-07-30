@@ -1,3 +1,11 @@
+import en_US from '../localization/en_US';
+import tr_TR from '../localization/tr_TR';
+
+export const Lang = {
+    en: en_US,
+    tr: tr_TR
+};
+
 export const RoleTypes = {
     SUPER_ADMIN: 1,
     ADMIN: 2,

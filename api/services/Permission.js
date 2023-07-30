@@ -1,14 +1,15 @@
 import db from '../src/models';
+import { Lang } from '../src/enum';
 
 class Permission {
 
 	static async create(req) {
 		try {
+			const { lang } = req.headers;
 			const data = req.body;
 			await db.Permissions.create(data);
 
-			// TODO: add localization
-			return { type: true, message: 'Permission created' };
+			return { type: true, message: Lang[lang].Permission.createSuccess };
 		}
 		catch (error) {
 			return { type: false, message: error.message };
@@ -17,13 +18,13 @@ class Permission {
 
 	static async get(req) {
 		try {
+			const { lang } = req.headers;
 			const permissions = await db.Permissions.findAll({
 				where: { is_removed: false },
 				attributes: [ 'id', 'name' ]
 			});
 
-			// TODO: add localization
-			return { type: true, message: 'Permissions fetched successfully', data: permissions };
+			return { type: true, message: Lang[lang].Permission.getSuccess, data: permissions };
 		}
 		catch (error) {
 			return { type: false, message: error.message };
