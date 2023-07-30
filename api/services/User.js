@@ -1,10 +1,11 @@
 import db from '../src/models';
-import { RoleTypes } from '../src/enum';
+import { RoleTypes, Lang } from '../src/enum';
 
 class User {
 
 	static async getAll(req) {
 		try {
+			const { lang } = req.headers;
 			const users = await db.Users.findAll({
 				where: { is_removed: false },
 				attributes: [
@@ -18,8 +19,7 @@ class User {
 					'username'
 				]
 			});
-			// TODO: add localization
-			return { type: true, message: 'Users fetched successfully', data: users };
+			return { type: true, message: Lang[lang].User.getSuccess, data: users };
 		}
 		catch (error) {
 			return { type: false, message: error.message };
@@ -28,6 +28,7 @@ class User {
 
 	static async get(req) {
 		try {
+			const { lang } = req.headers;
 			const { id } = req.params;
 			const user = await db.Users.findOne({
 				where: { id: id, is_removed: false },
@@ -42,11 +43,10 @@ class User {
 					'username'
 				]
 			});
-			// TODO: add localization
 			if (!user) {
-				return { type: false, message: 'User not found' };
+				return { type: false, message: Lang[lang].User.notFound };
 			}
-			return { type: true, message: 'User fetched successfully', data: user };
+			return { type: true, message: Lang[lang].User.getSuccess, data: user };
 		}
 		catch (error) {
 			return { type: false, message: error.message };
@@ -55,15 +55,15 @@ class User {
 
 	static async delete(req) {
 		try {
+			const { lang } = req.headers;
 			const { id } = req.params;
-			const user = await db.Users.update({
+			await db.Users.update({
 				is_removed: true
 			}, {
 				where: { id: id }
 			});
 
-			// TODO: add localization
-			return { type: true, message: 'User deleted successfully' };
+			return { type: true, message: Lang[lang].User.deleteSuccess };
 		}
 		catch (error) {
 			return { type: false, message: error.message };
@@ -72,12 +72,12 @@ class User {
 
 	static async update(req) {
 		try {
+			const { lang } = req.headers;
 			const { id } = req.params;
 			const data = req.body;
 			await db.Users.update(data, { where: { id: id } });
 
-			// TODO: add localization
-			return { type: true, message: 'User updated successfully' };
+			return { type: true, message: Lang[lang].User.updateSuccess };
 		}
 		catch (error) {
 			return { type: false, message: error.message };
@@ -86,19 +86,18 @@ class User {
 
 	static async assignRole(req) {
 		try {
+			const { lang } = req.headers;
 			const { user_id, role_id } = req.body;
 
-			// TODO: add localization
 			if (role_id === RoleTypes.SYS_ADMIN) {
-				return { type: false, message: 'Cannot assign system admin role' };
+				return { type: false, message: Lang[lang].User.assignRoleError };
 			}
 
 			const user = await db.Users.findOne({ where: { id: user_id } });
 			const role = await db.Roles.findOne({ where: { id: role_id } });
 
-			// TODO: add localization
 			if (!user || !role) {
-				return { type: false, message: 'User or role not found' };
+				return { type: false, message: Lang[lang].User.roleOrUserNotFound };
 			}
 
 			const userRole = await db.UserRoles.findOrCreate({
@@ -108,9 +107,9 @@ class User {
 
 			// TODO: add localization
 			if (!userRole[1]) {
-				return { type: false, message: 'Role already assigned to user' };
+				return { type: false, message: Lang[lang].User.roleAlreadyAssigned };
 			}
-			return { type: true, message: 'Role assigned to user' };
+			return { type: true, message: Lang[lang].User.assignRoleSuccess };
 		}
 		catch (error) {
 			return { type: false, message: error.message };

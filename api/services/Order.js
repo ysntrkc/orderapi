@@ -1,10 +1,11 @@
 import db from '../src/models';
-import { OrderStatusTypes } from '../src/enum';
+import { OrderStatusTypes, Lang } from '../src/enum';
 
 class Order {
 
 	static async create(req) {
 		try {
+			const { lang } = req.headers;
 			const cart = await db.Carts.findOne({
 				where: {
 					user_id: req.session.user.id,
@@ -28,7 +29,7 @@ class Order {
 			});
 
 			if (!cart) {
-				return { type: false, message: 'Cart not found' };	// TODO: Add localization
+				return { type: false, message: Lang[lang].Cart.notFound };
 			}
 
 			const order = {
@@ -52,8 +53,7 @@ class Order {
 			await db.CartItems.update({ is_removed: true }, { where: { cart_id: cart.id } });
 			await db.Carts.update({ is_removed: true }, { where: { user_id: req.session.user.id } });
 
-			// TODO: Add localization
-			return { type: true, message: 'Order created successfully' };
+			return { type: true, message: Lang[lang].Order.createSuccess };
 		}
 		catch (error) {
 			return { type: false, message: error.message };
@@ -62,6 +62,7 @@ class Order {
 
 	static async get(req) {
 		try {
+			const { lang } = req.headers;
 			const orders = await db.Orders.findAll({
 				where: { user_id: req.session.user.id },
 				attributes: [
@@ -84,8 +85,7 @@ class Order {
 				}
 			});
 
-			// TODO: Add localization
-			return { type: true, message: 'Orders retrieved successfully', data: orders };
+			return { type: true, message: Lang[lang].Order.getSuccess, data: orders };
 		}
 		catch (error) {
 			return { type: false, message: error.message };
@@ -94,6 +94,7 @@ class Order {
 
 	static async getAll(req) {
 		try {
+			const { lang } = req.headers;
 			const orders = await db.Orders.findAll({
 				attributes: [
 					'id',
@@ -131,8 +132,7 @@ class Order {
 
 			});
 
-			// TODO: Add localization
-			return { type: true, message: 'Orders retrieved successfully', data: orders };
+			return { type: true, message: Lang[lang].Order.getSuccess, data: orders };
 		}
 		catch (error) {
 			return { type: false, message: error.message };
@@ -141,15 +141,16 @@ class Order {
 
 	static async updateStatus(req) {
 		try {
+			const { lang } = req.headers;
 			const order = await db.Orders.findOne({ where: { id: req.params.id, is_removed: false } });
 
 			if (!order) {
-				return { type: false, message: 'Order not found' };	// TODO: Add localization
+				return { type: false, message: Lang[lang].Order.notFound };
 			}
 
 			await db.Orders.update({ status_id: req.body.status_id }, { where: { id: req.params.id } });
 
-			return { type: true, message: 'Order status updated successfully' };	// TODO: Add localization
+			return { type: true, message: Lang[lang].Order.updateSuccess };
 		}
 		catch (error) {
 			return { type: false, message: error.message };

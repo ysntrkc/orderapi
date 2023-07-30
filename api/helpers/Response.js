@@ -28,7 +28,7 @@ class Response {
 		case 'error':
 			return this.error(message);
 		default:
-			return this.error('Invalid response type'); // TODO: Add localization
+			return this.error('Invalid response type');
 		}
 	}
 

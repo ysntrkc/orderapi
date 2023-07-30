@@ -1,12 +1,13 @@
 import md5 from 'md5';
 import db from '../src/models';
 import General from '../helpers/General';
-import { RoleTypes } from '../src/enum';
+import { RoleTypes, Lang } from '../src/enum';
 
 class Auth {
 
 	static async login(req, res) {
 		try {
+			const { lang } = req.headers;
 			const { email, password, isRememberMe } = req.body;
 
 			const user = await db.Users.findOne({
@@ -17,9 +18,8 @@ class Auth {
 				}
 			});
 
-			// TODO: Add localization
 			if (!user) {
-				return { type: false, message: 'User not found' };
+				return { type: false, message: Lang[lang].Auth.userNotFound };
 			}
 
 			// TODO: remove refresh token and set longer session
@@ -35,8 +35,7 @@ class Auth {
 				email: user.email
 			};
 
-			// TODO: Add localization
-			return { type: true, message: 'Login successful' };
+			return { type: true, message: Lang[lang].Auth.loginSuccess };
 		}
 		catch (error) {
 			return { type: false, message: error.message };
@@ -45,6 +44,7 @@ class Auth {
 
 	static async register(req) {
 		try {
+			const { lang } = req.headers;
 			const body = req.body;
 
 			const userNameCheck = await db.Users.findOne({
@@ -52,18 +52,16 @@ class Auth {
 					username: body.username
 				}
 			});
-			// TODO: Add localization
 			if (userNameCheck) {
-				return { type: false, message: 'Username already exists' };
+				return { type: false, message: Lang[lang].Auth.usernameAlreadyExists };
 			}
 			const emailCheck = await db.Users.findOne({
 				where: {
 					email: body.email
 				}
 			});
-			// TODO: Add localization
 			if (emailCheck) {
-				return { type: false, message: 'Email already exists' };
+				return { type: false, message: Lang[lang].Auth.emailAlreadyExists };
 			}
 
 			// TODO: make this stronger
@@ -76,12 +74,9 @@ class Auth {
 					user_id: user.id,
 					role_id: RoleTypes.USER
 				});
-				// TODO: Add localization
-				return { type: true, message: 'User created successfully' };
+				return { type: true, message: Lang[lang].Auth.registerSuccess };
 			}
-			else {
-				return { type: false, message: 'User not created' };
-			}
+			return { type: false, message: Lang[lang].Auth.userNotFound };
 		}
 		catch (error) {
 			return { type: false, message: error.message };
@@ -90,12 +85,13 @@ class Auth {
 
 	static async logout(req, res) {
 		try {
+			const { lang } = req.headers;
 			// TODO: remove refresh token
 			await db.Users.update({ refresh_token: null }, { where: { id: req.session.user.id } });
 			req.session.destroy();
 			res.clearCookie('user_id');
-			// TODO: Add localization
-			return { type: true, message: 'Logout successful' };
+
+			return { type: true, message: Lang[lang].Auth.logoutSuccess };
 		}
 		catch (error) {
 			return { type: false, message: error.message };
