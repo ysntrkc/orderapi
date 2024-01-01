@@ -4,7 +4,7 @@
   "description": "",
   "main": "api/index.js",
   "scripts": {
-    "start": "env-cmd -f ./env/development.env nodemon --exec babel-node ./api/index.js",
+    "start": "nodemon --exec babel-node ./api/index.js",
     "test": "sequelize db:migrate:undo:all --env 'test'&&sequelize db:migrate --env 'test'&&npx sequelize db:seed:all --env 'test'&&sequelize db:seed:all --env 'test' --seeders-path './api/src/seeders/test/'&&env-cmd -f ./env/test.env mocha --require @babel/register ./api/test/index.js --timeout 10000 --exit"
   },
   "repository": {
