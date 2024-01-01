@@ -1,9 +1,11 @@
 import db from '../src/models';
+import { Lang } from '../src/enum';
 
 class Cart {
 
 	static async addToCart(req) {
 		try {
+			const { lang } = req.headers;
 			const item = {
 				product_id: req.body.product_id,
 				quantity: req.body.quantity,
@@ -13,7 +15,7 @@ class Cart {
 			const product = await db.Products.findOne({ where: { id: item.product_id } });
 
 			if (!product || product.stock_quantity < item.quantity) {
-				return { type: false, message: 'Product not found or insufficient stock' };
+				return { type: false, message: Lang[lang].Cart.insufficientStock };
 			}
 
 			const cart = await db.Carts.findOrCreate({
@@ -52,9 +54,7 @@ class Cart {
 			}, {
 				where: { id: cart[0].id }
 			});
-
-			// TODO: Add localization
-			return { type: true, message: 'Product added to cart successfully' };
+			return { type: true, message: Lang[lang].Cart.productAdded };
 		}
 		catch (error) {
 			return { type: false, message: error.message };
@@ -63,6 +63,7 @@ class Cart {
 
 	static async getCart(req) {
 		try {
+			const { lang } = req.headers;
 			const cart = await db.Carts.findOne({
 				where: {
 					user_id: req.session.user.id,
@@ -87,11 +88,11 @@ class Cart {
 
 			// TODO: Add localization
 			if (!cart) {
-				return { type: false, message: 'Cart not found' };
+				return { type: false, message: Lang[lang].Cart.notFound };
 			}
 
 			// TODO: Add localization
-			return { type: true, message: 'Cart retrieved successfully', data: cart };
+			return { type: true, message: Lang[lang].Cart.retrieved, data: cart };
 		}
 		catch (error) {
 			return { type: false, message: error.message };
