@@ -24,7 +24,7 @@ class Auth {
 	/**
 	 * @route POST /auth/login
 	 * @group Auth
-	 * @description Login user
+	 * @summary Login user
 	 * @param {LoginUser.model} LoginUser.body.required
 	 * @returns {object} 200 - Success response
 	 * @returns {object} 401 - Invalid credentials
@@ -50,7 +50,7 @@ class Auth {
 	/**
 	 * @route POST /auth/register
 	 * @group Auth
-	 * @description Register user
+	 * @summary Register user
 	 * @param {RegisterUser.model} RegisterUser.body.required
 	 * @returns {object} 200 - Success response
 	 * @returns {object} 500 - Server error
@@ -75,7 +75,7 @@ class Auth {
 	/**
 	 * @route GET /auth/logout
 	 * @group Auth
-	 * @description Logout user
+	 * @summary Logout user
 	 * @returns {object} 200 - Success response
 	 * @returns {object} 500 - Server error
 	 */
