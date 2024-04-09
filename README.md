@@ -37,6 +37,13 @@ SEQUELIZE_LOGGING=false
 SESSION_SECRET=<your-session-secret>
 JWT_SECRET=<your-jwt-secret>
 PASSWORD_SALT=<your-password-salt>
+
+DB_USER=postgres
+DB_PASS=postgres
+DB_NAME=orderapi
+DB_HOST=127.0.0.1
+DB_PORT=5432
+DB_DIALECT=postgres
 ```
 
 5. Run the server:

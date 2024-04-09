@@ -90,7 +90,7 @@ export default {
 		'string.min': '{{#label}} en az {{#limit}} karakter olmalı',
 		'string.normalize': '{{#label}} {{#form}} formunda normalleştirilmiş unicode olmalı',
 		'string.token': '{{#label}} sadece alfa-nümerik ve alt çizgili (underscore) karakterler içerebilir',
-		'string.pattern.base': '{{#label}} {:[.]} değeriyle gereken düzene uymuyor: {{#regex}}',
+		'string.pattern.base': '{{#label}} gereken düzene uymuyor: {{#regex}}',
 		'string.trim': '{{#label}} başında ve sonunda boşluk olmamalı',
 		'string.uri': '{{#label}} geçerli bir url olmalı',
 		'string.uriRelativeOnly': '{{#label}} geçerli bir relative url olmalı',

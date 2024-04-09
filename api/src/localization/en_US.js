@@ -90,7 +90,7 @@ export default {
 		'string.min': '{{#label}} length must be at least {{#limit}} characters long',
 		'string.normalize': '{{#label}} must be unicode normalized in the {{#form}} form',
 		'string.token': '{{#label}} must only contain alpha-numeric and underscore characters',
-		'string.pattern.base': '{{#label}} with value {:[.]} fails to match the required pattern: {{#regex}}',
+		'string.pattern.base': '{{#label}} fails to match the required pattern: {{#regex}}',
 		'string.trim': '{{#label}} must not have leading or trailing whitespace',
 		'string.uri': '{{#label}} must be a valid uri',
 		'string.uriRelativeOnly': '{{#label}} must be a valid relative uri',
