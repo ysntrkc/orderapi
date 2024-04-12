@@ -1,4 +1,4 @@
-import md5 from 'md5';
+import bcrypt from 'bcrypt';
 import db from '../src/models';
 
 import General from '../helpers/General';
@@ -16,7 +16,7 @@ class Auth {
 			const user = await db.Users.findOne({
 				where: {
 					email: email,
-					password: md5(md5(password) + process.env.PASSWORD_SALT),
+					password: bcrypt.hashSync(password, process.env.PASSWORD_SALT),
 					is_removed: false,
 				},
 			});
@@ -67,16 +67,16 @@ class Auth {
 				return { type: false, message: Lang[lang].Auth.emailAlreadyExists };
 			}
 
-			// TODO: make this stronger
-			body.password = md5(md5(body.password) + process.env.PASSWORD_SALT);
-			const user = await db.Users.create(body);
+			body.password = bcrypt.hashSync(body.password, process.env.PASSWORD_SALT);
+			body.UserRoles = [ { role_id: Roles.USER } ];
+
+			const user = await db.Users.create(body, {
+				include: [
+					db.UserRoles,
+				],
+			});
 
 			if (user) {
-				// TODO: make this in create user
-				await db.UserRoles.create({
-					user_id: user.id,
-					role_id: Roles.USER,
-				});
 				return { type: true, message: Lang[lang].Auth.registerSuccess };
 			}
 			return { type: false, message: Lang[lang].Auth.userNotFound };

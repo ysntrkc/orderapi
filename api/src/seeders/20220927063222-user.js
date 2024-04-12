@@ -1,6 +1,6 @@
 'use strict';
 require('dotenv').config({ path: './env/development.env' });
-const md5 = require('md5');
+const bcrypt = require('bcrypt');
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
 	async up(queryInterface, _Sequelize) {
@@ -9,7 +9,7 @@ module.exports = {
 			surname: 'Admin',
 			username: 'super_admin',
 			email: 'admin@admin.com',
-			password: md5(md5('Pass123.') + process.env.PASSWORD_SALT),
+			password: bcrypt.hashSync('Pass123.', process.env.PASSWORD_SALT),
 			createdAt: new Date(),
 			updatedAt: new Date(),
 		} ], {});
