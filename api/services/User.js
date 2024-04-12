@@ -16,8 +16,8 @@ class User {
 						db.Sequelize.col('surname')),
 					'name' ],
 					'email',
-					'username'
-				]
+					'username',
+				],
 			});
 			return { type: true, message: Lang[lang].User.getSuccess, data: users };
 		}
@@ -40,8 +40,8 @@ class User {
 						db.Sequelize.col('surname')),
 					'name' ],
 					'email',
-					'username'
-				]
+					'username',
+				],
 			});
 			if (!user) {
 				return { type: false, message: Lang[lang].User.notFound };
@@ -58,9 +58,9 @@ class User {
 			const { lang } = req.headers;
 			const { id } = req.params;
 			await db.Users.update({
-				is_removed: true
+				is_removed: true,
 			}, {
-				where: { id: id }
+				where: { id: id },
 			});
 
 			return { type: true, message: Lang[lang].User.deleteSuccess };
@@ -102,10 +102,9 @@ class User {
 
 			const userRole = await db.UserRoles.findOrCreate({
 				where: { user_id: user_id, role_id: role_id },
-				defaults: { user_id: user_id, role_id: role_id }
+				defaults: { user_id: user_id, role_id: role_id },
 			});
 
-			// TODO: add localization
 			if (!userRole[1]) {
 				return { type: false, message: Lang[lang].User.roleAlreadyAssigned };
 			}

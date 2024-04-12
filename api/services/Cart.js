@@ -9,7 +9,7 @@ class Cart {
 			const item = {
 				product_id: req.body.product_id,
 				quantity: req.body.quantity,
-				user_id: req.session.user.id
+				user_id: req.session.user.id,
 			};
 
 			const product = await db.Products.findOne({ where: { id: item.product_id } });
@@ -20,39 +20,39 @@ class Cart {
 
 			const cart = await db.Carts.findOrCreate({
 				where: { user_id: item.user_id },
-				defaults: { user_id: item.user_id }
+				defaults: { user_id: item.user_id },
 			});
 
 			item['cart_id'] = cart[0].id;
 
 			const cartItem = await db.CartItems.findOne({
-				where: { product_id: item.product_id, cart_id: item.cart_id }
+				where: { product_id: item.product_id, cart_id: item.cart_id },
 			});
 
 			if (!cartItem) {
 				await db.CartItems.create({
 					product_id: item.product_id,
 					quantity: item.quantity,
-					cart_id: item.cart_id
+					cart_id: item.cart_id,
 				});
 			}
 			else {
 				await db.CartItems.update({
-					quantity: cartItem.quantity + item.quantity
+					quantity: cartItem.quantity + item.quantity,
 				}, {
-					where: { product_id: item.product_id, cart_id: item.cart_id }
+					where: { product_id: item.product_id, cart_id: item.cart_id },
 				});
 			}
 
 			await db.Products.update({
-				stock_quantity: product.stock_quantity - item.quantity
+				stock_quantity: product.stock_quantity - item.quantity,
 			}, {
-				where: { id: item.product_id }
+				where: { id: item.product_id },
 			});
 			await db.Carts.update({
-				total: cart[0].total + (product.price * item.quantity)
+				total: cart[0].total + (product.price * item.quantity),
 			}, {
-				where: { id: cart[0].id }
+				where: { id: cart[0].id },
 			});
 			return { type: true, message: Lang[lang].Cart.productAdded };
 		}
@@ -67,23 +67,23 @@ class Cart {
 			const cart = await db.Carts.findOne({
 				where: {
 					user_id: req.session.user.id,
-					is_removed: false
+					is_removed: false,
 				},
 				attributes: [
 					'id',
-					'total'
+					'total',
 				],
 				include: {
 					model: db.Products,
 					attributes: [
 						'id',
 						'name',
-						'price'
+						'price',
 					],
 					through: {
-						attributes: [ 'quantity' ]
-					}
-				}
+						attributes: [ 'quantity' ],
+					},
+				},
 			});
 
 			// TODO: Add localization

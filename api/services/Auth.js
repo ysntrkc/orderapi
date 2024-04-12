@@ -14,8 +14,8 @@ class Auth {
 				where: {
 					email: email,
 					password: md5(md5(password) + process.env.PASSWORD_SALT),
-					is_removed: false
-				}
+					is_removed: false,
+				},
 			});
 
 			if (!user) {
@@ -32,7 +32,7 @@ class Auth {
 			req.session.user = {
 				id: user.id,
 				username: user.username,
-				email: user.email
+				email: user.email,
 			};
 
 			return { type: true, message: Lang[lang].Auth.loginSuccess };
@@ -49,16 +49,16 @@ class Auth {
 
 			const userNameCheck = await db.Users.findOne({
 				where: {
-					username: body.username
-				}
+					username: body.username,
+				},
 			});
 			if (userNameCheck) {
 				return { type: false, message: Lang[lang].Auth.usernameAlreadyExists };
 			}
 			const emailCheck = await db.Users.findOne({
 				where: {
-					email: body.email
-				}
+					email: body.email,
+				},
 			});
 			if (emailCheck) {
 				return { type: false, message: Lang[lang].Auth.emailAlreadyExists };
@@ -72,7 +72,7 @@ class Auth {
 				// TODO: make this in create user
 				await db.UserRoles.create({
 					user_id: user.id,
-					role_id: RoleTypes.USER
+					role_id: RoleTypes.USER,
 				});
 				return { type: true, message: Lang[lang].Auth.registerSuccess };
 			}

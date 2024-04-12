@@ -1,140 +1,150 @@
 module.exports = {
 	'env': {
 		node: true,
-		commonjs: true
+		commonjs: true,
 	},
 	'parser': 'babel-eslint',
 	'parserOptions': {
-		'sourceType': 'module'
+		'sourceType': 'module',
 	},
 	'extends': [ 'eslint:recommended' ],
 	'rules': {
 		'indent': [
 			'error',
-			'tab'
+			'tab',
 		],
 		'quotes': [
 			'error',
-			'single'
+			'single',
 		],
 		'semi': [
 			'error',
-			'always'
+			'always',
 		],
 		'no-extra-semi': [
-			'error'
+			'error',
 		],
 		'eqeqeq': [
 			'error',
-			'always'
+			'always',
 		],
 		'no-empty': [
-			'error'
+			'error',
 		],
 		'no-multi-str': [
-			'error'
+			'error',
 		],
 		'comma-spacing': [
 			'error',
 			{
 				'before': false,
-				'after': true
-			}
+				'after': true,
+			},
 		],
 		'block-spacing': [
-			'error'
+			'error',
 		],
 		'array-bracket-spacing': [
 			'error',
-			'always'
+			'always',
 		],
 		'multiline-comment-style': [
 			'error',
-			'starred-block'
+			'starred-block',
 		],
 		'padded-blocks': [
 			'error',
 			{
-				'classes': 'always'
-			}
+				'classes': 'always',
+			},
 		],
 		'semi-spacing': [
 			'error',
 			{
 				'before': false,
-				'after': false
-			}
+				'after': false,
+			},
 		],
 		'key-spacing': [
 			'error',
 			{
-				'beforeColon': false
-			}
+				'beforeColon': false,
+			},
 		],
 		'for-direction': [
-			'error'
+			'error',
 		],
 		'no-shadow': [
-			'error'
+			'error',
 		],
 		'no-loop-func': [
-			'error'
+			'error',
 		],
 		'camel_case': [
-			'off'
+			'off',
 		],
 		'comma-dangle': [
 			'error',
-			'never'
+			'always-multiline',
 		],
 		'brace-style': [
 			'error',
-			'stroustrup'
+			'stroustrup',
 		],
 		'keyword-spacing': [
 			'error',
 			{
-				'after': true
-			}
+				'after': true,
+			},
 		],
 		'no-multiple-empty-lines': [
 			'error',
 			{
-				'max': 1
-			}
+				'max': 1,
+			},
 		],
 		'no-lonely-if': [
-			'error'
+			'error',
 		],
 		'new-cap': [
 			'error',
 			{
-				'newIsCap': true
-			}
+				'newIsCap': true,
+			},
 		],
 		'no-plusplus': [
-			'error'
+			'error',
 		],
 		'no-param-reassign': [
-			'error'
+			'error',
 		],
 		'consistent-return': [
-			'error'
+			'error',
 		],
 		'no-const-assign': [
-			'error'
+			'error',
 		],
 		'max-len': [
 			'error',
 			{
-				'code': 120
-			}
+				'code': 120,
+			},
 		],
 		'no-var': [
-			'error'
+			'error',
 		],
 		'no-dupe-keys': 0,
 		'no-useless-catch': 0,
-		'no-mixed-spaces-and-tabs': 0
-	}
+		'no-mixed-spaces-and-tabs': 0,
+		'eol-last': [
+			'error',
+			'always',
+		],
+		'no-unused-vars': [
+			'error',
+			{
+				'argsIgnorePattern': '^_',
+			},
+		],
+	},
 };

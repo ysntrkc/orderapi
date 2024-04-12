@@ -4,20 +4,20 @@ class Response {
 		if (data === undefined) {
 			return {
 				type: true,
-				message: message
+				message: message,
 			};
 		}
 		return {
 			type: true,
 			message: message,
-			data: data
+			data: data,
 		};
 	}
 
 	static error(message) {
 		return {
 			type: false,
-			message: message
+			message: message,
 		};
 	}
 

@@ -6,7 +6,7 @@ class General {
 
 	static async createToken(user) {
 		const token = jwt.sign({ id: user.id, email: user.email, username: user.username }, process.env.JWT_SECRET, {
-			expiresIn: '180d'
+			expiresIn: '180d',
 		});
 
 		return token;
@@ -17,7 +17,7 @@ class General {
 			const decoded = jwt.verify(token, process.env.JWT_SECRET);
 			const user = await db.Users.findOne({
 				where: { id: decoded.id },
-				attributes: { exclude: [ 'password' ] }
+				attributes: { exclude: [ 'password' ] },
 			});
 
 			if (user) {
@@ -42,16 +42,17 @@ class General {
 						include: {
 							model: db.Permissions,
 							where: { id: perm_id },
-							through: []
+							through: [],
 						},
-						through: []
-					}
+						through: [],
+					},
 				});
 
 				const userInfo = JSON.parse(JSON.stringify(user));
 
 				if (userInfo.Roles.length > 0 && userInfo.Roles[0].Permissions[0].id === perm_id) {
 					next();
+					return res.status(200);
 				}
 				else {
 					return res.status(401).json({ type: false, message: Lang[req.headers.lang].Global.unauthorized });
@@ -67,11 +68,12 @@ class General {
 		try {
 			if (req.session.user && req.cookies['connect.sid']) {
 				next();
+				return res.status(200);
 			}
 			else {
 				const token = await db.Users.findOne({
 					where: { id: req.cookies.user_id},
-					attributes: [ 'refresh_token' ]
+					attributes: [ 'refresh_token' ],
 				});
 
 				if (token.refresh_token) {
@@ -79,9 +81,10 @@ class General {
 					req.session.user = {
 						id: user.id,
 						email: user.email,
-						username: user.username
+						username: user.username,
 					};
 					next();
+					return res.status(200);
 				}
 				else {
 					res.status(401);
@@ -102,14 +105,15 @@ class General {
 				include: {
 					model: db.Roles,
 					where: { id: 1 },
-					through: []
-				}
+					through: [],
+				},
 			});
 
 			const userInfo = JSON.parse(JSON.stringify(user));
 
 			if (user && userInfo.Roles.length > 0 && userInfo.Roles[0].id === 1) {
 				next();
+				return res.status(200);
 			}
 			else {
 				res.status(401);

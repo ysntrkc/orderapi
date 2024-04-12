@@ -10,10 +10,9 @@ class Product {
 
 			const product = await db.Products.findOrCreate({
 				where: { name: data.name },
-				defaults: data
+				defaults: data,
 			});
 
-			// TODO: add localization
 			if (!product[1]) {
 				return { type: false, message: Lang[lang].Product.alreadyExists };
 			}
@@ -29,14 +28,14 @@ class Product {
 			const { lang } = req.headers;
 			const products = await db.Products.findAll({
 				where: {
-					is_removed: false
+					is_removed: false,
 				},
 				attributes: [
 					'id',
 					'name',
 					'stock_quantity',
-					'price'
-				]
+					'price',
+				],
 			});
 			return { type: true, message: Lang[lang].Product.getSuccess, data: products };
 		}
@@ -52,9 +51,9 @@ class Product {
 			const { stock_quantity } = req.body;
 
 			const product = await db.Products.update({
-				stock_quantity: stock_quantity
+				stock_quantity: stock_quantity,
 			}, {
-				where: { id: id }
+				where: { id: id },
 			});
 
 			if (!product) {
@@ -73,12 +72,11 @@ class Product {
 			const { id } = req.params;
 
 			const product = await db.Products.update({
-				is_removed: true
+				is_removed: true,
 			}, {
-				where: { id: id }
+				where: { id: id },
 			});
 
-			// TODO: add localization
 			if (!product) {
 				return { type: false, message: Lang[lang].Product.notFound };
 			}

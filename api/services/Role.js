@@ -8,7 +8,7 @@ class Role {
 			const { lang } = req.headers;
 			const roles = await db.Roles.findAll({
 				where: { is_removed: false },
-				attributes: [ 'id', 'name' ]
+				attributes: [ 'id', 'name' ],
 			});
 
 			return { type: true, message: Lang[lang].Role.getSuccess, data: roles };
@@ -32,7 +32,7 @@ class Role {
 
 			const rolePermission = await db.RolePermissions.findOrCreate({
 				where: { role_id: role_id, permission_id: permission_id },
-				defaults: { role_id: role_id, permission_id: permission_id }
+				defaults: { role_id: role_id, permission_id: permission_id },
 			});
 
 			if (!rolePermission[1]) {

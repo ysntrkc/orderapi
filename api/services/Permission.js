@@ -21,7 +21,7 @@ class Permission {
 			const { lang } = req.headers;
 			const permissions = await db.Permissions.findAll({
 				where: { is_removed: false },
-				attributes: [ 'id', 'name' ]
+				attributes: [ 'id', 'name' ],
 			});
 
 			return { type: true, message: Lang[lang].Permission.getSuccess, data: permissions };

@@ -1,57 +1,58 @@
+/* eslint-disable max-len */
 export default {
-  Global: {
-    unauthorized: 'Yetkisiz erişim',
-  },
+	Global: {
+		unauthorized: 'Yetkisiz erişim',
+	},
 	Auth: {
-    userNotFound: 'Kullanıcı bulunamadı',
-    loginSuccess: 'Giriş başarılı',
-    usernameAlreadyExists: 'Kullanıcı adı zaten var',
-    emailAlreadyExists: 'E-posta zaten var',
-    registerSuccess: 'Kayıt başarılı',
-    logoutSuccess: 'Çıkış başarılı',
-  },
-  Cart: {
-    insufficientStock: 'Ürün bulunamadı veya stok yetersiz',
-    productAdded: 'Ürün başarıyla sepete eklendi',
-    notFound: 'Sepet bulunamadı',
-    retrieved: 'Sepet başarıyla alındı',
-  },
-  Order: {
-    createSuccess: 'Sipariş başarıyla oluşturuldu',
-    getSuccess: 'Sipariş başarıyla alındı',
-    notFound: 'Sipariş bulunamadı',
-    updateSuccess: 'Sipariş durumu başarıyla güncellendi',
-  },
-  Permission: {
-    createSuccess: 'İzin başarıyla oluşturuldu',
-    getSuccess: 'İzin başarıyla alındı',
-  },
-  Product: {
-    createSuccess: 'Ürün başarıyla oluşturuldu',
-    getSuccess: 'Ürün başarıyla alındı',
-    notFound: 'Ürün bulunamadı',
-    updateSuccess: 'Ürün başarıyla güncellendi',
-    deleteSuccess: 'Ürün başarıyla silindi',
-    alredyExists: 'Ürün zaten var',
-  },
-  Role: {
-    getSuccess: 'Rol başarıyla alındı',
-  },
-  RolesPermission: {
-    notFound: 'Rol veya izin bulunamadı',
-    alredyExists: 'Rol izni zaten var',
-    assignSuccess: 'Rol izni başarıyla atandı',
-  },
-  User: {
-    getSuccess: 'Kullanıcı başarıyla alındı',
-    notFound: 'Kullanıcı bulunamadı',
-    updateSuccess: 'Kullanıcı başarıyla güncellendi',
-    deleteSuccess: 'Kullanıcı başarıyla silindi',
-    assignRoleError: 'Sistem yönetici rolü atanamaz',
-    roleOrUserNotFound: 'Rol veya kullanıcı bulunamadı',
-    roleAlreadyAssigned: 'Rol zaten kullanıcıya atanmış',
-    assignRoleSuccess: 'Rol başarıyla atanmış',
-  },
+		userNotFound: 'Kullanıcı bulunamadı',
+		loginSuccess: 'Giriş başarılı',
+		usernameAlreadyExists: 'Kullanıcı adı zaten var',
+		emailAlreadyExists: 'E-posta zaten var',
+		registerSuccess: 'Kayıt başarılı',
+		logoutSuccess: 'Çıkış başarılı',
+	},
+	Cart: {
+		insufficientStock: 'Ürün bulunamadı veya stok yetersiz',
+		productAdded: 'Ürün başarıyla sepete eklendi',
+		notFound: 'Sepet bulunamadı',
+		retrieved: 'Sepet başarıyla alındı',
+	},
+	Order: {
+		createSuccess: 'Sipariş başarıyla oluşturuldu',
+		getSuccess: 'Sipariş başarıyla alındı',
+		notFound: 'Sipariş bulunamadı',
+		updateSuccess: 'Sipariş durumu başarıyla güncellendi',
+	},
+	Permission: {
+		createSuccess: 'İzin başarıyla oluşturuldu',
+		getSuccess: 'İzin başarıyla alındı',
+	},
+	Product: {
+		createSuccess: 'Ürün başarıyla oluşturuldu',
+		getSuccess: 'Ürün başarıyla alındı',
+		notFound: 'Ürün bulunamadı',
+		updateSuccess: 'Ürün başarıyla güncellendi',
+		deleteSuccess: 'Ürün başarıyla silindi',
+		alredyExists: 'Ürün zaten var',
+	},
+	Role: {
+		getSuccess: 'Rol başarıyla alındı',
+	},
+	RolesPermission: {
+		notFound: 'Rol veya izin bulunamadı',
+		alredyExists: 'Rol izni zaten var',
+		assignSuccess: 'Rol izni başarıyla atandı',
+	},
+	User: {
+		getSuccess: 'Kullanıcı başarıyla alındı',
+		notFound: 'Kullanıcı bulunamadı',
+		updateSuccess: 'Kullanıcı başarıyla güncellendi',
+		deleteSuccess: 'Kullanıcı başarıyla silindi',
+		assignRoleError: 'Sistem yönetici rolü atanamaz',
+		roleOrUserNotFound: 'Rol veya kullanıcı bulunamadı',
+		roleAlreadyAssigned: 'Rol zaten kullanıcıya atanmış',
+		assignRoleSuccess: 'Rol başarıyla atanmış',
+	},
 	Joi: {
 		'any.required': '{{#label}} gerekli',
 		'array.base': '{{#label}} bir dizi olmalı',
@@ -95,6 +96,6 @@ export default {
 		'string.uri': '{{#label}} geçerli bir url olmalı',
 		'string.uriRelativeOnly': '{{#label}} geçerli bir relative url olmalı',
 		'string.uppercase': '{{#label}} sadece büyük harfler içermeli',
-		password: 'Şifre en az 8 karakter uzunluğunda olmalı, en az bir büyük harf, bir küçük harf, bir rakam ve bir özel karakter içermelidir.'
-	}
+		password: 'Şifre en az 8 karakter uzunluğunda olmalı, en az bir büyük harf, bir küçük harf, bir rakam ve bir özel karakter içermelidir.',
+	},
 };

@@ -9,23 +9,23 @@ class Order {
 			const cart = await db.Carts.findOne({
 				where: {
 					user_id: req.session.user.id,
-					is_removed: false
+					is_removed: false,
 				},
 				attributes: [
 					'id',
-					'total'
+					'total',
 				],
 				include: {
 					model: db.Products,
 					attributes: [
 						'id',
 						'name',
-						'price'
+						'price',
 					],
 					through: {
-						attributes: [ 'quantity' ]
-					}
-				}
+						attributes: [ 'quantity' ],
+					},
+				},
 			});
 
 			if (!cart) {
@@ -39,15 +39,15 @@ class Order {
 				OrderItems: cart.Products.map(item => {
 					return {
 						product_id: item.id,
-						quantity: item.CartItems.quantity
+						quantity: item.CartItems.quantity,
 					};
-				})
+				}),
 			};
 
 			await db.Orders.create(order, {
 				include: {
-					model: db.OrderItems
-				}
+					model: db.OrderItems,
+				},
 			});
 
 			await db.CartItems.update({ is_removed: true }, { where: { cart_id: cart.id } });
@@ -68,21 +68,21 @@ class Order {
 				attributes: [
 					'id',
 					'total',
-					'status_id'
+					'status_id',
 				],
 				include: {
 					model: db.Products,
 					attributes: [
 						'id',
 						'name',
-						'price'
+						'price',
 					],
 					through: {
 						attributes: [
-							'quantity'
-						]
-					}
-				}
+							'quantity',
+						],
+					},
+				},
 			});
 
 			return { type: true, message: Lang[lang].Order.getSuccess, data: orders };
@@ -104,7 +104,7 @@ class Order {
 						' ',
 						db.Sequelize.col('User.surname')),
 					'user_name' ],
-					[ db.Sequelize.col('OrderStatus.name'), 'status' ]
+					[ db.Sequelize.col('OrderStatus.name'), 'status' ],
 				],
 				include: [
 					{
@@ -112,23 +112,23 @@ class Order {
 						attributes: [
 							'id',
 							'name',
-							'price'
+							'price',
 						],
 						through: {
 							attributes: [
-								'quantity'
-							]
-						}
+								'quantity',
+							],
+						},
 					},
 					{
 						model: db.Users,
-						attributes: []
+						attributes: [],
 					},
 					{
 						model: db.OrderStatuses,
-						attributes: []
-					}
-				]
+						attributes: [],
+					},
+				],
 
 			});
 

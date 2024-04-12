@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 export default {
 	Global: {
 		unauthorized: 'Unauthorized access',
@@ -95,6 +96,6 @@ export default {
 		'string.uri': '{{#label}} must be a valid uri',
 		'string.uriRelativeOnly': '{{#label}} must be a valid relative uri',
 		'string.uppercase': '{{#label}} must only contain uppercase characters',
-		password: 'Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number and one special character'
-	}
+		password: 'Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number and one special character',
+	},
 };

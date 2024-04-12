@@ -24,26 +24,22 @@ app.use(session({
 	secret: process.env.SESSION_SECRET,
 	saveUninitialized: true,
 	cookie: {
-		maxAge: 1000 * 60 * 60 * 24	// 1 day
+		maxAge: 1000 * 60 * 60 * 24,	// 1 day
 	},
-	resave: false
+	resave: false,
 }));
 
-app.use((req, res, next) => {
-	res.header('Access-Control-Allow-Origin', '*');
-	res.header('Access-Control-Allow-Credentials', true);
-	res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, language');
-	res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+app.use((req, _res, next) => {
 	req.headers.lang = req.headers.lang || 'tr';
 	next();
 });
 
 app.use('/', routes);
 
-app.get('/health', (req, res) => {
+app.get('/health', (_req, res) => {
 	return res.json({
 		type: true,
-		message: 'Server is up and running'
+		message: 'Server is up and running',
 	});
 });
 
