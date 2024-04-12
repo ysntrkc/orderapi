@@ -12,6 +12,11 @@ module.exports = (sequelize, DataTypes) => {
 		static associate(models) {
 			Users.hasOne(models.Carts, { foreignKey: 'user_id' });
 
+			Users.hasMany(models.UserRoles, {
+				foreignKey: 'user_id',
+				as: 'UserRolesHasMany',
+			});
+
 			Users.belongsToMany(models.Roles, {
 				through: 'UserRoles',
 				foreignKey: 'user_id',

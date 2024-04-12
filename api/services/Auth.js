@@ -62,12 +62,15 @@ class Auth {
 				return { type: false, message: Lang[lang].Auth.emailAlreadyExists };
 			}
 
-			body.password = bcrypt.hashSync(body.password, process.env.BCRYPT_ROUNDS);
-			body.UserRoles = [ { role_id: Roles.USER } ];
+			body.password = bcrypt.hashSync(body.password, Number(process.env.BCRYPT_ROUNDS));
+			body.UserRolesHasMany = [ { role_id: Roles.USER } ];
 
 			const user = await db.Users.create(body, {
 				include: [
-					db.UserRoles,
+					{
+						model: db.UserRoles,
+						as: 'UserRolesHasMany',
+					},
 				],
 			});
 
