@@ -135,8 +135,6 @@ module.exports = {
 		],
 		'no-dupe-keys': 0,
 		'no-useless-catch': 0,
-		'consistent-return': 0,
-		'no-mixed-spaces-and-tabs': 0,
-		'no-plusplus': 0
+		'no-mixed-spaces-and-tabs': 0
 	}
 };
