@@ -1,7 +1,10 @@
 import md5 from 'md5';
 import db from '../src/models';
+
 import General from '../helpers/General';
-import { RoleTypes, Lang } from '../src/enum';
+
+import { Lang } from '../src/enum';
+import { Roles } from '../src/enum/roles';
 
 class Auth {
 
@@ -72,7 +75,7 @@ class Auth {
 				// TODO: make this in create user
 				await db.UserRoles.create({
 					user_id: user.id,
-					role_id: RoleTypes.USER,
+					role_id: Roles.USER,
 				});
 				return { type: true, message: Lang[lang].Auth.registerSuccess };
 			}

@@ -1,5 +1,7 @@
 import db from '../src/models';
-import { RoleTypes, Lang } from '../src/enum';
+
+import { Lang } from '../src/enum';
+import { Roles } from '../src/enum/roles';
 
 class User {
 
@@ -89,7 +91,7 @@ class User {
 			const { lang } = req.headers;
 			const { user_id, role_id } = req.body;
 
-			if (role_id === RoleTypes.SYS_ADMIN) {
+			if (role_id === Roles.SYS_ADMIN) {
 				return { type: false, message: Lang[lang].User.assignRoleError };
 			}
 
