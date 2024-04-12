@@ -9,7 +9,7 @@ module.exports = {
 			surname: 'Admin',
 			username: 'admin',
 			email: 'admin@adm.com',
-			password: bcrypt.hashSync('Pass123.', process.env.PASSWORD_SALT),
+			password: bcrypt.hashSync('Pass123.', process.env.BCRYPT_ROUNDS),
 			createdAt: new Date(),
 			updatedAt: new Date(),
 		}, {
@@ -17,7 +17,7 @@ module.exports = {
 			surname: 'Doe',
 			username: 'johndoe',
 			email: 'john@doe.com',
-			password: bcrypt.hashSync('Pass123.', process.env.PASSWORD_SALT),
+			password: bcrypt.hashSync('Pass123.', process.env.BCRYPT_ROUNDS),
 			createdAt: new Date(),
 			updatedAt: new Date(),
 		}, {
@@ -25,7 +25,7 @@ module.exports = {
 			surname: 'Doe',
 			username: 'janedoe',
 			email: 'jane@doe.com',
-			password: bcrypt.hashSync('Pass123.', process.env.PASSWORD_SALT),
+			password: bcrypt.hashSync('Pass123.', process.env.BCRYPT_ROUNDS),
 			createdAt: new Date(),
 			updatedAt: new Date(),
 		},

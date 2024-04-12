@@ -32,11 +32,12 @@ npx sequelize-cli db:seed:all
 PORT=3000
 NODE_ENV=development
 HOST=localhost
-SEQUELIZE_LOGGING=false
 
 SESSION_SECRET=<your-session-secret>
 JWT_SECRET=<your-jwt-secret>
-PASSWORD_SALT=<your-password-salt>
+BCRYPT_ROUNDS=12
+
+SEQUELIZE_LOGGING=false
 
 DB_USER=postgres
 DB_PASS=postgres
@@ -46,7 +47,7 @@ DB_PORT=5432
 DB_DIALECT=postgres
 ```
 
-5. Run the server:
+1. Run the server:
 
 ```
 npm start

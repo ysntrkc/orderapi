@@ -71,30 +71,11 @@ class General {
 				return res.status(200);
 			}
 			else {
-				const token = await db.Users.findOne({
-					where: { id: req.cookies.user_id},
-					attributes: [ 'refresh_token' ],
-				});
-
-				if (token.refresh_token) {
-					const user = await General.decodeToken(token.refresh_token);
-					req.session.user = {
-						id: user.id,
-						email: user.email,
-						username: user.username,
-					};
-					next();
-					return res.status(200);
-				}
-				else {
-					res.status(401);
-					return res.json({ type: false, message: Lang[req.headers.lang].Global.unauthorized });
-				}
+				return res.status(401).json({ type: false, message: Lang[req.headers.lang].Global.unauthorized });
 			}
 		}
 		catch (error) {
-			res.status(500);
-			return res.json({ type: false, message: error.message });
+			return res.status(500).json({ type: false, message: error.message });
 		}
 	}
 
@@ -116,13 +97,11 @@ class General {
 				return res.status(200);
 			}
 			else {
-				res.status(401);
-				return res.json({ type: false, message: Lang[req.headers.lang].Global.unauthorized });
+				return res.status(401).json({ type: false, message: Lang[req.headers.lang].Global.unauthorized });
 			}
 		}
 		catch (error) {
-			res.status(500);
-			return res.json({ type: false, message: error.message });
+			return res.status(500).json({ type: false, message: error.message });
 		}
 	}
 

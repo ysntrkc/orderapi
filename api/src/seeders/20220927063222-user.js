@@ -9,7 +9,7 @@ module.exports = {
 			surname: 'Admin',
 			username: 'super_admin',
 			email: 'admin@admin.com',
-			password: bcrypt.hashSync('Pass123.', process.env.PASSWORD_SALT),
+			password: bcrypt.hashSync('Pass123.', Number(process.env.BCRYPT_ROUNDS)),
 			createdAt: new Date(),
 			updatedAt: new Date(),
 		} ], {});

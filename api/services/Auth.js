@@ -1,14 +1,12 @@
 import bcrypt from 'bcrypt';
 import db from '../src/models';
 
-import General from '../helpers/General';
-
 import { Lang } from '../src/enum';
 import { Roles } from '../src/enum/roles';
 
 class Auth {
 
-	static async login(req, res) {
+	static async login(req) {
 		try {
 			const { lang } = req.headers;
 			const { email, password, isRememberMe } = req.body;
@@ -16,20 +14,17 @@ class Auth {
 			const user = await db.Users.findOne({
 				where: {
 					email: email,
-					password: bcrypt.hashSync(password, process.env.PASSWORD_SALT),
 					is_removed: false,
 				},
 			});
 
-			if (!user) {
+			const isPasswordValid = bcrypt.compareSync(password, user?.password);
+			if (!user || !isPasswordValid) {
 				return { type: false, message: Lang[lang].Auth.userNotFound };
 			}
 
-			// TODO: remove refresh token and set longer session
 			if (isRememberMe) {
-				const refresh_token = await General.createToken(user);
-				await db.Users.update({ refresh_token: refresh_token }, { where: { id: user.id } });
-				res.cookie('user_id', user.id, { maxAge: 1000 * 60 * 60 * 24 * 180 });
+				req.session.cookie.maxAge = 1000 * 60 * 60 * 24 * 30; // 30 days
 			}
 
 			req.session.user = {
@@ -67,7 +62,7 @@ class Auth {
 				return { type: false, message: Lang[lang].Auth.emailAlreadyExists };
 			}
 
-			body.password = bcrypt.hashSync(body.password, process.env.PASSWORD_SALT);
+			body.password = bcrypt.hashSync(body.password, process.env.BCRYPT_ROUNDS);
 			body.UserRoles = [ { role_id: Roles.USER } ];
 
 			const user = await db.Users.create(body, {
@@ -86,13 +81,10 @@ class Auth {
 		}
 	}
 
-	static async logout(req, res) {
+	static async logout(req) {
 		try {
 			const { lang } = req.headers;
-			// TODO: remove refresh token
-			await db.Users.update({ refresh_token: null }, { where: { id: req.session.user.id } });
 			req.session.destroy();
-			res.clearCookie('user_id');
 
 			return { type: true, message: Lang[lang].Auth.logoutSuccess };
 		}
